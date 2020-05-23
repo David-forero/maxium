@@ -1,0 +1,35 @@
+.div-form{
+    height: 83vh;
+    background: url('../img/night_city_night_buildings.jpg');
+    background-size: cover;
+}
+
+.title-form{
+    font-weight: 300 !important;
+}
+
+#particles-js{
+    width: 100%;
+    height:83vh;
+    position: fixed;/*esto permite que las particulas no se muevan, se quedan quietas cuando bajamos en la barra*/ 
+}
+
+@media screen and (max-width: 770px){
+    .title-form{
+        font-size: 22px;
+    }
+
+    .formulario-login{
+        padding: 0px;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .title-form{
+       display: none;
+    }
+    .formulario-login{
+        padding: 10px;
+    }
+
+}

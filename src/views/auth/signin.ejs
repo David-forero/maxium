@@ -1,0 +1,66 @@
+<%- include('../partials/_header.ejs') %>
+
+    <div id="particles-js"></div>
+    <div class="div-form w-100">
+        
+        <div class="container">
+            <div class="row pt-5">
+                <div class="col-md-8 col-sm-12 ">
+                    <h2 class="text-white text-center mt-5 title-form">Tu seguridad nos importa, para ello te enseñamos a protegerte de toda amenaza.</h2>
+                </div>
+                <div class="col-md-4 col-sm-12 formulario-login">
+                    <form action="/signin" method="POST" autocomplete="off">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="text-center text-dark">Login</h3>
+                            </div>
+    
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <input type="email" placeholder="Correo" name="email" class="form-control">
+                                </div>
+    
+                                <div class="form-group">
+                                    <input type="password" placeholder="Contraseña" name="password" class="form-control">
+                                </div>
+
+                                <% if(error.length > 0){ %>
+                                    <div class="alert alert-danger text-center">
+                                        <%= error %>
+                                    </div>
+                                <% } %>    
+                                
+                                <div class="form-group">
+                                    <button class="btn btn-success btn-block">
+                                        Entrar
+                                    </button>
+                                </div>
+
+                                <div class="form-group text-center">
+                                    <a href="/signup">Crear una cuenta</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JQUERY -->
+    <script src="/js/jquery.js"></script>
+    <!-- BOOTSTRAP JS -->
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- SCROLL ANIMATION -->
+    <script src="/js/scrollanimation1.js"></script>
+    <!-- CUSTOM JS -->
+    <script src="/js/main.js"></script>
+
+    <!-- Particles -->
+    <script src="/js/particles.js"></script>
+    <script src="/js/particulas.js"></script>
+</body>
+
+</html>  
