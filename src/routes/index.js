@@ -72,6 +72,28 @@ router.post('/signup', passport.authenticate('local-signup', {
     passReqToCallback: true
 }));
 
+//=============================================================
+
+router.get('/nc-registro', (req, res) => {
+    res.render('auth/admins-a');
+});
+
+router.post('/nc-registro', passport.authenticate('admin-signup', {
+    successRedirect: '/dashboard/home',
+    failureRedirect: '/nc-registro',
+    passReqToCallback: true
+}));
+
+router.get('/nc-login', (req, res) => {
+    res.render('auth/admins');
+});
+
+router.post('/nc-login', passport.authenticate('local-signin', {
+    successRedirect: '/dashboard/home',
+    failureRedirect: '/nc-login',
+    passReqToCallback: true
+}))
+
 router.get('/logout', (req, res, next) =>{
     req.logout();
     res.redirect('/');
