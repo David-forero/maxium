@@ -4,17 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Home</title>
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+    <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="/css/bootstrap.min.cosmo.css">
-    <style>
-        body{
-            background: whitesmoke;
-        }
-    </style>
-
+    <!-- ANIMATION CSS -->
+    <link rel="stylesheet" href="/css/animate.css">
+    <!-- CSS GENERAL -->
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <!-- ICONS -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!-- JQUERY -->
+    <script src="/js/jquery.js"></script>
+    
 </head>
 <body>
+    <nav class="nav">
+        <div class="menu-open">
+            <a style="cursor: pointer;"><i class="fa fa-bars"></i></a>
+        </div>
 
-    <%- body %>
+        <div class="brand">
+            <span>
+                <a href="/dashboard/home">Maxium Dashboard</a>
+            </span>
+        </div>
 
+        <div class="cart">
+            <a href="#"><i class="fa sign-out-alt"></i> Cerrar sessión</a>
+        </div>
+
+        <div class="menu">
+            <div class="menu-close">
+                <i class="fa fa-times"></i>
+            </div>
+
+            <ul>
+                <a href="/dashboard/home"> <li><i class="fa fa-home"></i> Inicio</li></a>
+                <a href="/dashboard/courses"><li><i class="fa fa-pencil"></i> Cursos</li></a>
+                <a href="/dashboard/news"><li><i class="fa fa-book"></i> Blog</li></a>
+                <a href="/dashboard/events"><li><i class="fa fa-flag"></i> Eventos</li></a>
+                <a href="/dashboard/users"><li id="bor"><i class="fa fa-users"></i> Permisos</li></a>
+
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container pt-5">
+        <%- body %>
+    </div>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- TWEENMAX -->
+    <script src="/js/TweenMax.min.js"></script>
+    <!-- WOW.JS -->
+    <script src="/js/wow.min.js"></script>
+    <script>
+
+        //WOW.js animation
+        new WOW().init();
+
+        //MENU
+        var t1 = new TimelineMax({paused: true});
+        t1.to(".menu", 0.5, {
+                left: "0%",
+                ease: Power2.easeInOut
+        });
+
+        t1.reverse();
+        $(document).on("click", ".menu-open", function() {
+                t1.reversed(!t1.reversed());
+        });
+        $(document).on("click", ".menu-close", function() {
+                t1.reversed(!t1.reversed());
+        });
+    </script>
 </body>
 </html>

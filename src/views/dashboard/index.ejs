@@ -1,5 +1,130 @@
 <%- layout('layout/dashboard') %>
 
-<h1>En construccion</h1>
+<div class="row mt-4">
+    <div class="col-lg-8 mt-5 wow fadeInLeft" data-wow-delay="0.2s"">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h3>Estadísticas <i class="fa fa-bar-chart"></i></h3>
+            </div>
 
-<div class="btn btn-primary">Sooos</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div id="canvas-container">
+                            <div id="chart" style="width: 50%;"></div>
+                        </div>
+                    </div>
+    
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Cursos: 12</div>
+                        </div>
+    
+                        <div class="form-group">
+                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Noticas: 154</div>
+                        </div>
+    
+                        <div class="form-group">
+                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Eventos: 4</div>
+                        </div>
+    
+                        <div class="form-group">
+                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Usuarios: 2301</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4 wow fadeInLeft" data-wow-delay="0.6s"">
+            <div class="card-header bg-dark text-white">
+                <h3>Comentarios recientes <i class="fa fa-comments"></i></h3>
+            </div>
+
+            <div class="card-body">
+                <div class="card">
+                    
+                    <div class="card-header">
+                        <a href="#"><h4 class="card-title text-center text-primary">Anonymous Hackeó el departamento de policias de Chicago</h4></a>
+                    </div>    
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                avatar
+                            </div>
+                            <div class="col-lg-10">
+                                <blockquote>
+                                    <h3>David Forero dice:</h3>
+                                    
+                                    <p>Me ha gustado este articulo, me gustaria saber más sobre este tema.</p>
+                                    <span class="mb-3" style="color: rgba(0, 0, 0, 0.5);"><i class="fa fa-clock-o"></i> Hace 2 dias</span>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card mt-3 wow fadeInRight" data-wow-delay="0.2s">
+            <div class="card-header bg-dark text-white text-center">
+                Curso de linux
+            </div>
+
+            <div class="card-body text-center inscritos">
+                <h4 class="card-title">Inscritos:</h4>
+                <p class="card-title"> 0 </p>
+            </div>
+        </div>
+
+        <div class="card mt-3 wow fadeInRight" data-wow-delay="0.6s">
+            <div class="card-header bg-dark text-white text-center">
+                Curso de python
+            </div>
+
+            <div class="card-body text-center inscritos">
+                <h4 class="card-title">Inscritos:</h4>
+                <p class="card-title"> 0 </p>
+            </div>
+        </div>
+
+        <div class="card mt-3 wow fadeInRight" data-wow-delay="1.0s">
+            <div class="card-header bg-dark text-white text-center">
+                Curso de antiphishing
+            </div>
+
+            <div class="card-body text-center inscritos">
+                <h4 class="card-title">Inscritos:</h4>
+                <p class="card-title"> 0 </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <script src="/js/Chart.bundle.min.js"></script> -->
+<!-- <script>
+    $(document).ready(function() {
+        let datos = {
+            type: 'pie',
+            data:{
+                datasets:[{
+                    data:[20, 100],
+                    backgroudColor:['#F7464A', '#46BFBD']
+                }],
+                Labels: [
+                    "Venezuela",
+                    "Panamá"
+                ]
+            },
+            option:{
+                responsive: true
+            }
+        };
+        let canvas = document.getElementById('chart').isContentEditable('2d');
+        window.pie = new Chart(canvas, datos)
+    })
+</script> -->
