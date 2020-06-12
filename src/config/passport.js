@@ -74,28 +74,3 @@ passport.use('local-signin', new LocalStrategy({
         done(null, user)
     }
 }));
-
-//=============================================== Admin
-
-passport.use('admin-signup', new LocalStrategy({ //aca le damos los datos del cliente que se va a loguear
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true //esto es necesario para obtener los demas datos 
-}, async (req, email, password, done) => {
-    const { name, rol } = req.body;
-    const user = await User.findOne({email: email});
-
-    if (user) {
-        return done(null, false, req.flash('Error', 'El correo ya está en uso.'));
-    } else{
-        const newUser = new User();
-        newUser.email = email;
-        newUser.password = newUser.encryptPassword(password);
-
-        newUser.name = name;
-        newUser.role = rol;
-
-        await newUser.save();
-        done(null, newUser)
-    }
-}));

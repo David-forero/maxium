@@ -132,3 +132,28 @@ body::-webkit-scrollbar-thumb{
 }
 
 .fa-star{font-size: 17px !important}
+
+
+/* ==================== [ USERS ] ==================*/
+
+.table-users{
+    overflow: auto !important;
+}
+
+@media screen and (max-width: 450px){
+    .table-users{
+        padding: 10px;
+        width: 100% !important;
+    }
+
+    .table-users th{
+        padding: 10px !important;
+        text-align: center;
+        vertical-align: auto;
+        width: 0px !important;
+    }
+
+    .table-users table{
+        width: 650px !important;
+    }
+}

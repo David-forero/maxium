@@ -1,0 +1,36 @@
+<%- layout('layout/dashboard')%>
+
+<div class="col-md-4 mt-5 offset-md-4 formulario-login">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title text-center text-dark">Editar Usuario</h3>
+        </div>
+      <form action="/dashboard/user_edit/<%= edit._id %>" method="post" class="card-body" autocomplete="off">
+        
+        <div class="form-group">
+          <input type="text" value="<%= edit.name %>" name="name" class="form-control py-3"/>
+        </div>
+
+        <div class="form-group">
+            <input type="text" value="<%= edit.lastname %>" name="lastname" class="form-control py-3"/>
+        </div>
+
+        <div class="form-group">
+            <input type="text" value="<%= edit.email %>" name="email" class="form-control py-3"/>
+        </div>  
+
+        <div class="form-group">
+            <select name="role" class="form-control">
+                <option value="<%= edit.role %>" selected disabled>Moderador</option>
+                <option value="mod">Moderador</option>
+                <option value="helper">Ayudante</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-success btn-block py-2 px-5">Guardar</button>
+        </div>
+   
+      </form>
+    </div>
+  </div>

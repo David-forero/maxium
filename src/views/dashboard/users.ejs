@@ -6,20 +6,20 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-4">
-        <form method="POST" action="/nc-registro" autocomplete="off" class="card wow fadeInUp" data-wow-delay="0.5s">
+    <div class="col-lg-4 mb-4">
+        <form method="POST" action="/dashboard/add/users" autocomplete="off" class="card wow fadeInUp" data-wow-delay="0.5s">
             <div class="card-header">
                 <h3 class="card-title">Añadir un rol <i class="fa fa-user-plus"></i></h3>
             </div>
 
             <div class="card-body">
                 <div class="form-group">
-                    <label>Nombre</label>
-                    <input required type="text" class="form-control" name="name" autofocus>
+                    <label>Nombre:</label>
+                    <input required type="text" autofocus class="form-control" name="name">
                 </div>
 
                 <div class="form-group">
-                    <label>Apellido</label>
+                    <label>Apellido:</label>
                     <input required type="text" class="form-control" name="lastname">
                 </div>
 
@@ -40,7 +40,7 @@
 
                 <div class="form-group">
                     <label>Selecciona un rol:</label>
-                    <select required name="rol" class="form-control">
+                    <select required name="role" class="form-control">
                         <option disabled selected>...</option>
                         <option value="mod">Moderador</option>
                         <option value="helper">Ayudante</option>
@@ -48,26 +48,39 @@
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-primary py-2 px-4 btn-block">Agregar</button>
+                    <button type="submit" class="btn btn-primary py-2 px-4 btn-block">Agregar</button>
                 </div>
             </div>
         </form>
     </div>
 
-    <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.9s">
-        <table class="table table-bordered table-hover">
+    <div class="col-lg-8 mb-4 table-users wow fadeInUp" data-wow-delay="0.9s">
+        <table class="table table-bordered bg-white">
             <thead class="bg-dark text-white">
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
+                    <th>Nombre y Apellido</th>
                     <th>Correo</th>
                     <th>Rol</th>
                     <th>Actions</th>
+                    <th>Fecha de Creación</th>
                 </tr>
             </thead>
             <tbody>
-                
+                <% for(let i=0; i < users.length; i++){ %>
+                    <tr>
+                        <td><%= i+1 %></td>
+                        <td><%= users[i].name %> <%= users[i].lastname %></td>
+                        <td><%= users[i].email %></td>
+                        <td><%= users[i].role %></td>
+                        <td class="text-center">
+                            <a style="font-size: 18px;" class="text-success" href="/dashboard/user_edit/<%= users[i]._id %>"><i class="fa fa-pencil-square-o mr-3"></i></a>
+                            <a style="font-size: 18px;" class="text-danger" href="/dashboard/user_delete/<%= users[i]._id %>"><i class="fa fa-trash"></i></a>
+                        </td>
+                        <td><%= moment(users[i].created_at).startOf('minutes').fromNow() %></td>     
+                    </tr>
+                <% } %>
+             
             </tbody>
         </table>
     </div>
