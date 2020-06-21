@@ -2,13 +2,14 @@ const { Router } = require('express');
 const router = Router();
 const passport = require('passport');
 
+//helpers
+const { isAuthenticated, isAdmin } = require('../helpers/auth');
+
+
 //controllers
 const index = require('../controllers/index');
 
-router.get('/', (req, res) => {
-    let title = "Maxium - Bienvenidos";
-    res.render('index', {title});
-});
+router.get('/', index.index);
 
 router.get('/capacitaciones', (req, res) => {
     let title = "Capacitaciones";
@@ -40,10 +41,7 @@ router.get('/noticias', (req, res) => {
     res.render('noticias', {title});
 });
 
-router.get('/payment', (req, res) => {
-    let title = "Formulario de pago";
-    res.render('payment', {title});
-});
+router.get('/payment/:id', index.payment);
 
 router.get('/productos', (req, res) => {
     let title = "Productos";
@@ -74,16 +72,6 @@ router.post('/signup', passport.authenticate('local-signup', {
 
 //=============================================================
 
-router.get('/nc-registro', (req, res) => {
-    res.render('auth/admins-a');
-});
-
-router.post('/nc-registro', passport.authenticate('admin-signup', {
-    successRedirect: '/dashboard/home',
-    failureRedirect: '/nc-registro',
-    passReqToCallback: true
-}));
-
 router.get('/nc-login', (req, res) => {
     res.render('auth/admins');
 });
@@ -99,9 +87,6 @@ router.get('/logout', (req, res, next) =>{
     res.redirect('/');
 })
 
-//404
-// router.get('*', function (req, res) {
-//     res.status(404).render('404');
-// });
+router.get('/course/delete/:id', isAuthenticated, isAdmin, index.removeCourse);
 
 module.exports = router;

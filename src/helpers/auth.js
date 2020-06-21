@@ -11,7 +11,7 @@ helper.isAuthenticated = (req, res, next) => {
 helper.isAdmin = (req, res, next) => {
     if (req.user && req.user.role === 'admin')
         return next();
-    return res.redirect('/');
+    return res.render('404');
 };
 
 module.exports = helper;

@@ -133,6 +133,17 @@ body::-webkit-scrollbar-thumb{
 
 .fa-star{font-size: 17px !important}
 
+/* ==================== [ COURSES ] ==================*/
+
+.separar{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.separar .datos-card p{
+    margin-bottom: 3px;
+}
 
 /* ==================== [ USERS ] ==================*/
 

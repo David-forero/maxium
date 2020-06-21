@@ -5,23 +5,33 @@
                 <div class="col-md-7 col-sm-12 " >
                     <article class="d-flex justify-content-center">
                         <div class="card my-5" style="width: 550px;">
-                            <img src="img/hackerman-computers.jpg" alt="Curso" class="card-img-top img-fluid p-2">
+                            <img src="/uploads/<%= course.image %>" alt="<%= course.title %>" class="card-img-top img-fluid p-2">
                             <div class="card-body">
-                                <p class="card-text"><small class="text-muted"><i class="fa fa-clock-o"></i> Subido el 27/4/2020</small></p>
-                                <h3 class="card-title">Curso de linux.</h3>
-                                <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, dolor veniam? Nemo distinctio, commodi enim libero, minus aspernatur doloribus similique sunt adipisci corrupti autem minima totam? Cupiditate excepturi adipisci eveniet.
+                                <p class="card-text"><small class="text-muted"><i class="fa fa-clock-o"></i> Publicado el <%= moment(course.created_at).locale('es').format("ll") %></small></p>
+                                <h3 class="card-title text-primary"><%= course.title %>.</h3>
+                                <br>
+                                <p class="card-text text-justify">
+                                    <%= course.description %>
                                 </p>
                 
                                 <hr>
                 
-                                <h4 class="card-title">Más información</h4>
+                                <h4 class="card-title">Más información.</h4>
                                 <ul class="list-group">
-                                    <li class="list-group-item">Lugar: Duo</li>
-                                    <li class="list-group-item">Hora: 2:32pm</li>
-                                    <li class="list-group-item">Modalidad: Online</li>
-                                    <li class="list-group-item">Consultor: Jhonatan Madera</li>
+                                    <li class="list-group-item">Fecha: <%= moment(course.day).format("DD/MM/YYYY") %></li>
+                                    <li class="list-group-item">Modalidad: <%= course.modo %></li>
+                                    <li class="list-group-item">Lugar: <%= course.place %></li>
+                                    <li class="list-group-item">Hora: <%= course.timeFrom %> - <%= course.timeUntil %></li>
+                                    <li class="list-group-item">Consultor: <%= course.consultant %></li>
                                 </ul>
+
+                                <% if(user.role === "admin"){%>
+                                    <div class="d-flex justify-content-between">
+                                        <a href="/dashboard/course/edit/<%= course.uniqueId %>" class="btn btn-success mt-3">Modificar</a>
+
+                                        <a href="/course/delete/<%= course.uniqueId %>" class="btn btn-danger mt-3">Eliminar Curso</a>
+                                    </div>
+                                <% } %>
                             </div>
                         </div>
                     </article>
@@ -96,10 +106,10 @@
                 
                             <div class="form-group d-flex flex-row-reverse mt-3">
                                 <button type="submit" class="btn btn-success py-2 px-4 btn-buy">
-                                    Comprar por 23.00$ <i class="fa fa-tag"></i>
+                                    Comprar por <%= Intl.NumberFormat("de-DE").format(course.price)%>Bs <i class="fa fa-tag"></i>
                                 </button>
                             </div>
                     </form>
                 </div>
             </div>
-        </div>
+</div>

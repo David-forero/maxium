@@ -5,25 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
     
     <!-- BOOTSTRAP CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
-    
     <!-- FONT AWESOME -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!-- ANIMATE CSS -->
+    <link rel="stylesheet" href="/css/animate.css">
     <!-- CUSTOM CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/form.css">
 </head>
 
 <body>
     <header>
         <div style="background: #232f3eed;">
             <div class="container d-flex justify-content-center py-1">
-                <a href="/" style="color: white" class="d-flex"><img src="img/icon.png" alt="icono" width="50">
+                <a href="/" style="color: white" class="d-flex"><img src="/img/icon.png" alt="icono" width="50">
                     <h5 style="color: whitesmoke; padding-top: 10px;">Seguridad Maxium</h5>
                 </a>
             </div>
@@ -81,22 +81,22 @@
 
                             <div class="banner-subcategoria">
                                 <a href="#">
-                                    <img src="img/menu-img/presencial-presencial.jpg" alt="Cursos presenciales">
+                                    <img src="/img/menu-img/presencial-presencial.jpg" alt="Cursos presenciales">
                                 </a>
                             </div>
 
                             <div class="galeria-subcategoria">
                                 <a href="#">
-                                    <img src="img/menu-img/presencial-programacion-web.jpg" alt="Cursos presenciales">
+                                    <img src="/img/menu-img/presencial-programacion-web.jpg" alt="Cursos presenciales">
                                 </a>
                                 <a href="#">
-                                    <img src="img/menu-img/presencial-sploit.jpg" alt="Cursos presenciales">
+                                    <img src="/img/menu-img/presencial-sploit.jpg" alt="Cursos presenciales">
                                 </a>
                                 <a href="#">
-                                    <img src="img/menu-img/presencial-sql.jpg" alt="Cursos presenciales">
+                                    <img src="/img/menu-img/presencial-sql.jpg" alt="Cursos presenciales">
                                 </a>
                                 <a href="#">
-                                    <img src="img/menu-img/presenial-drone.jpg" alt="Cursos presenciales">
+                                    <img src="/img/menu-img/presenial-drone.jpg" alt="Cursos presenciales">
                                 </a>
                             </div>
                         </div>
@@ -113,22 +113,22 @@
 
                             <div class="banner-subcategoria">
                                 <a href="#">
-                                    <img src="img/menu-img/curso-online-segurity.jpg" alt="">
+                                    <img src="/img/menu-img/curso-online-segurity.jpg" alt="">
                                 </a>
                             </div>
 
                             <div class="galeria-subcategoria">
                                 <a href="#">
-                                    <img src="img/menu-img/curso-online-laptop-1.jpg" alt="">
+                                    <img src="/img/menu-img/curso-online-laptop-1.jpg" alt="">
                                 </a>
                                 <a href="#">
-                                    <img src="img/menu-img/curso-online-laptop-2.png" alt="">
+                                    <img src="/img/menu-img/curso-online-laptop-2.png" alt="">
                                 </a>
                                 <a href="#">
-                                    <img src="img/menu-img/curso-online-tablet.png" alt="">
+                                    <img src="/img/menu-img/curso-online-tablet.png" alt="">
                                 </a>
                                 <a href="#">
-                                    <img src="img/menu-img/curso-online.jpg" alt="">
+                                    <img src="/img/menu-img/curso-online.jpg" alt="">
                                 </a>
                             </div>
                         </div>
@@ -145,19 +145,19 @@
 
                             <div class="banner-subcategoria">
                                 <a href="#">
-                                    <img src="img/menu-img/ropa-banner-1.png" alt="">
+                                    <img src="/img/menu-img/ropa-banner-1.png" alt="">
                                 </a>
                             </div>
 
                             <div class="galeria-subcategoria">
                                 <a href="#">
-                                    <img src="img/menu-img/ropa-galeria-1.png" alt="">
+                                    <img src="/img/menu-img/ropa-galeria-1.png" alt="">
                                 </a>
                                 <a href="#">
-                                    <img src="img/menu-img/ropa-galeria-2.png" alt="">
+                                    <img src="/img/menu-img/ropa-galeria-2.png" alt="">
                                 </a>
                                 <a href="#">
-                                    <img src="img/menu-img/ropa-galeria-3.png" alt="">
+                                    <img src="/img/menu-img/ropa-galeria-3.png" alt="">
                                 </a>
                                 <a href="#">
                                     <img src="img/menu-img/ropa-galeria-4.png" alt="">
@@ -294,9 +294,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
     
     <!-- SCROLL ANIMATION -->
-    <script src="/js/scrollanimation1.js"></script>
+    <script src="/js/wow.min.js"></script>
     
     <!-- CUSTOM JS -->
     <script src="/js/main.js"></script>
+    <!-- WOW JS -->
+    <script>
+        //WOW.js animation
+        new WOW().init();
+    </script>
 </body>
 </html>    

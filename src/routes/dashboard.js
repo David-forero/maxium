@@ -7,13 +7,12 @@ const dashboard = require('../controllers/dashboard');
 //helpers
 const { isAuthenticated, isAdmin } = require('../helpers/auth');
 
-router.get('/home', (req, res) =>{
-    res.render('dashboard/index');
-})
+router.get('/home', isAuthenticated, isAdmin, dashboard.getStadis);
 
-router.get('/courses', isAuthenticated, isAdmin, (req, res) =>{
-    res.render('dashboard/cursos');
-})
+router.get('/courses',  isAuthenticated, isAdmin, dashboard.getCourses);
+router.post('/course/add',  isAuthenticated, isAdmin, dashboard.addCourse);
+router.get('/course/edit/:id', isAuthenticated, isAdmin, dashboard.getCourseForUpdate);
+router.post('/course/edit/:id', isAuthenticated, isAdmin, dashboard.courseEdit);
 
 router.get('/news', isAuthenticated, isAdmin, (req, res) =>{
     res.render('dashboard/index');

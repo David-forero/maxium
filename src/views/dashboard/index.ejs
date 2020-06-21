@@ -1,7 +1,7 @@
 <%- layout('layout/dashboard') %>
 
 <div class="row mt-4">
-    <div class="col-lg-8 mt-5 wow fadeInLeft" data-wow-delay="0.2s"">
+    <div class="col-lg-8 mt-5 wow fadeInLeft" data-wow-delay="0.2s">
         <div class="card">
             <div class="card-header bg-dark text-white">
                 <h3>Estadísticas <i class="fa fa-bar-chart"></i></h3>
@@ -70,38 +70,18 @@
     </div>
 
     <div class="col-lg-4">
-        <div class="card mt-3 wow fadeInRight" data-wow-delay="0.2s">
-            <div class="card-header bg-dark text-white text-center">
-                Curso de linux
+        <% for(let i=0; i < courses.length; i++){ %>
+            <div class="card mt-3 wow fadeInRight" data-wow-delay="<%= (i + 1) / 2 %>s">
+                <div class="card-header bg-dark text-white text-center">
+                    <%= courses[i].title %>
+                </div>
+    
+                <div class="card-body text-center inscritos">
+                    <h4 class="card-title">Inscritos:</h4>
+                    <p class="card-title"><%= courses[i].participants_count %></p>
+                </div>
             </div>
-
-            <div class="card-body text-center inscritos">
-                <h4 class="card-title">Inscritos:</h4>
-                <p class="card-title"> 0 </p>
-            </div>
-        </div>
-
-        <div class="card mt-3 wow fadeInRight" data-wow-delay="0.6s">
-            <div class="card-header bg-dark text-white text-center">
-                Curso de python
-            </div>
-
-            <div class="card-body text-center inscritos">
-                <h4 class="card-title">Inscritos:</h4>
-                <p class="card-title"> 0 </p>
-            </div>
-        </div>
-
-        <div class="card mt-3 wow fadeInRight" data-wow-delay="1.0s">
-            <div class="card-header bg-dark text-white text-center">
-                Curso de antiphishing
-            </div>
-
-            <div class="card-body text-center inscritos">
-                <h4 class="card-title">Inscritos:</h4>
-                <p class="card-title"> 0 </p>
-            </div>
-        </div>
+        <% } %>    
     </div>
 </div>
 

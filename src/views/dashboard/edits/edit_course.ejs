@@ -1,33 +1,23 @@
-<%- layout('layout/dashboard') %>
-
-<% if(success.length > 0){ %>
-    <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
-        <p class="mb-0"><%= success %></p>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-<% } %>  
-
+<%- layout('layout/dashboard')%>
 
 <div class="row px-5 py-4 mt-3">
     <div class="col-lg-8 offset-md-2 wow fadeInUp" data-wow-delay="0.2s">
-        <form action="/dashboard/course/add" method="post" class="card" autocomplete="off" enctype="multipart/form-data">
+        <form action="/dashboard/course/edit/<%= edit._id %>" method="post" class="card" autocomplete="off" enctype="multipart/form-data">
             <div class="card-header">
-                <h3>Crear un nuevo curso</h3>
+                <img src="/uploads/<%= edit.image %>" class="card-img-top">
             </div>
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label>Título del curso:</label>
-                        <input type="text" maxlength="50" name="title" class="form-control" required placeholder="Curso de...">
+                        <input type="text" maxlength="50" value="<%= edit.title %>" name="title" class="form-control" required placeholder="Curso de...">
                     </div>
                     
                     <div class="form-group col-md-4">
                         <label>Consultor:</label>
                         
                         <select class="form-control" name="consultant" required>
-                            <option disabled selected>...</option>
+                            <option value="<%= edit.consultant %>" disabled selected><%= edit.consultant %></option>
                             <option value="Jhonatan Maderos">Jhonatan Maderos</option>
                             <option value="David Forero">David Forero</option>
                             <option value="Jhonas Canvals">Jhonas Canvals</option>
@@ -39,7 +29,7 @@
                         <label>Modalidad:</label>
 
                         <select class="form-control" name="modo" required>
-                            <option disabled selected>...</option>
+                            <option value="<%= edit.modo %>" disabled selected><%= edit.modo %></option>
                             <option value="Presencial">Presencial</option>
                             <option value="Online">Online</option>
                         </select>                        
@@ -47,17 +37,17 @@
                 </div>
 
                 <div class="form-row">
-                    <label>Descripción del curso:</label>
+                    <label>Descripción del curso</label>
 
                     <div class="col-md-12 form-group">
-                        <textarea name="description" class="form-control" required rows="8"></textarea>
+                        <textarea name="description" class="form-control" required rows="8"><%= edit.description %></textarea>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label>Fecha:</label>
-                        <input type="date" name="day" min="<%= moment().format('l') %>" class="form-control" required>
+                        <input type="date" name="day" min="<%= moment().format() %>" class="form-control" value="<%= edit.day %>" required>
                     </div>
                 </div>
 
@@ -65,7 +55,7 @@
                     <div class="form-group col-md-4">
                         <label>Lugar:</label>
                         <select class="form-control" name="place" required>
-                            <option disabled selected>...</option>
+                            <option value="<%= edit.place %>" disabled selected><%= edit.place %></option>
                             <option value="Hotel Gran Casino - Los Teques (Venezuela)">Hotel Gran Casino - Los Teques (Venezuela)</option>
                             <option value="Plaza Venezuela - Caracas (Venezuela)">Plaza Venezuela - Caracas (Venezuela)</option>
                             <option value="Skype">Skype</option>
@@ -76,8 +66,8 @@
 
                     <div class="form-group col-md-4">
                         <label>Desde (Hora):</label>
-                        <select class="form-control" name="timeFrom" required>
-                            <option disabled selected>...</option>
+                        <select class="form-control" name="timeFrom">
+                            <option disabled selected><%= edit.timeFrom %></option>
                             <option value="8:00am">8:00am</option>
                             <option value="8:30am">8:30am</option>
                             <option value="9:00am">9:00am</option>
@@ -103,8 +93,8 @@
 
                     <div class="form-group col-md-4">
                         <label>Hasta (Hora):</label>
-                        <select class="form-control" name="timeUntil" required>
-                            <option disabled selected>...</option>
+                        <select class="form-control" name="timeUntil">
+                            <option disabled selected><%= edit.timeUntil %></option>
                             <option value="8:00am">8:00am</option>
                             <option value="8:30am">8:30am</option>
                             <option value="9:00am">9:00am</option>
@@ -132,49 +122,16 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Costo:</label>
-                        <input type="text" id="number" name="price" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group col-md-6">
-                        <label>Imagen del curso:</label>
-                        <input type="file" name="image" required>
+                        <input type="text" id="number" name="price" class="form-control" value="<%= edit.price %>">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary px-4 py-2">
-                        Publicar Curso
+                        Guardar Cambios
                     </button>
                 </div>
             </div>
         </form>
     </div>
 </div>
-
-<div class="d-flex justify-content-center flex-wrap mb-5">
-    
-        <% for(let i=0; i < courses.length; i++){ %>
-            <div style="width: 350px;" class="card m-2 wow fadeInUp" data-wow-delay="0.2s">
-                <a href="/payment/<%= courses[i].uniqueId %>"><img src="/uploads/<%= courses[i].image %>" height="261" class="card-img-top" alt="<%= courses[i].title %>"></a>
-                
-                <div class="card-body separar">
-                    <a href="/payment/<%= courses[i].uniqueId %>"><h3 class="card-title text-primary"><%= courses[i].title %></h3></a>
-    
-                    <div class="datos-card">
-                        <p><i class="fa fa-user"></i> Participantes: <%= courses[i].participants_count %></p>
-                        <p><i class="fa fa-clock-o"></i> Publicado: <%= moment(courses[i].created_at).locale('es').startOf('minutes').fromNow() %></p>
-                    </div>
-                </div>
-            </div>
-        <% } %>
-    
-</div>
-
-<script>
-
-let f = new Date();
-console.log(f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
-
-let number = 20000;
-console.log(new Intl.NumberFormat("de-DE").format(number))
-</script>
