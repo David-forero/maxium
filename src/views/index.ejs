@@ -180,7 +180,7 @@
                 <div class="d-flex justify-content-center flex-wrap">
                     <% for(let i=0; i < courses.length; i++){ %>
                         <div class="card mb-3 wow flipInY">
-                            <img src="/uploads/<%= courses[i].image %>" alt="Curso de linux" class="card-img-top">
+                            <img src="/uploads/<%= courses[i].image %>" alt="<%= courses[i].title %>" class="card-img-top">
     
                             <div class="card-body separar">
                                 <h5 class="card-title text-dark"><%= courses[i].title %>.</h5>

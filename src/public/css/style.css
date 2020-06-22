@@ -761,6 +761,12 @@ footer h3{font-weight: 300;}
 	padding: 0 !important;
 }
 
+@media screen and (max-width:760px){
+	.allCourses{
+		justify-content: center !important;
+	}
+}
+
 /*Medida para Smartphones*/
 @media screen and (max-width:450px){
 	.articles-noticias .thumb {

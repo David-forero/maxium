@@ -4,6 +4,7 @@ const fs = require('fs-extra');
 //const md5 = require('md5');
 
 // Helpers
+const Counts = require('../helpers/counts')
 const { randomNumber } = require('../helpers/randomNumber.js');
 
 const ctrl = {}

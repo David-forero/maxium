@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const ctrl = {}
 const { Cursos } = require('../models');
+const Counts = require('../helpers/counts');
 
 ctrl.index = async (req, res) =>{
     const courses = await Cursos.find().limit(3).sort({created_at: -1});
@@ -12,9 +13,34 @@ ctrl.index = async (req, res) =>{
 ctrl.payment = async (req, res) => {
     const { id } = req.params;
     const course = await Cursos.findOne({image: {$regex: id}});;
-
     let title = "Formulario de pago";
     res.render('payment', {title, course});
+}
+
+ctrl.capacitaciones = async (req, res, next) => {
+    //const { tag } = req.params
+    let paginas = 1;
+    let page = req.params.page || 1;
+
+    let title = "Capacitaciones";
+    const counts = await Counts();
+
+    Cursos
+        .find({})//que busque todo los datos
+        .skip((paginas * page) - paginas) //formula necesaria para que calcule los datos
+        .limit(paginas) //cuantos datos quieres por pagina
+        .exec((err, courses) => {//ejectuo la consulta
+            Cursos.count((err, count) =>{
+                if (err) return next(err);
+                res.render('capacitaciones', {
+                    title,
+                    counts,
+                    courses,
+                    current: page,
+                    pages: Math.ceil(count / paginas)
+                });
+            });
+        }); 
 }
 
 ctrl.contacto = async (req, res) =>{

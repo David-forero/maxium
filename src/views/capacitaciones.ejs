@@ -1,86 +1,89 @@
 <%- layout('layout/main.ejs') %>
 
-
-
 <div class="container p-4">
         <div class="d-flex justify-content-center flex-wrap mb-4">
-            <div class="btn btn-dark text-white mr-4 py-2 px-4" style="border-radius: 0 !important">Online (2)</div>
+            <div class="btn btn-dark text-white mr-4 py-2 px-4" style="border-radius: 0 !important">Todos (<%= counts.courses %>)</div>
 
-            <div class="btn btn-dark text-white mr-4 py-2 px-4" style="border-radius: 0 !important">Presenciales (54)</div>
+            <div class="btn btn-dark text-white mr-4 py-2 px-4" style="border-radius: 0 !important">Online (<%= counts.online %>)</div>
+
+            <div class="btn btn-dark text-white mr-4 py-2 px-4" style="border-radius: 0 !important">Presenciales (<%= counts.presencial %>)</div>
         </div>
+</div>
 
-        <div class="card">
-            <div class="card-body">    
-
-                <h3 class="text-center text-dark">Online</h3>
+<div class="container">
+    <div class="d-flex flex-wrap mb-5 allCourses">
+        
+        <% for(let i=0; i < courses.length; i++){ %>
+            <div style="width: 350px;" class="card m-2 wow flipInY" data-wow-delay="0.2s">
+                <a href="/payment/<%= courses[i].uniqueId %>"><img src="/uploads/<%= courses[i].image %>" height="261" class="card-img-top" alt="<%= courses[i].title %>"></a>
                 
-                <div class="d-flex justify-content-center flex-wrap mt-4">
-                    <!-- Cart -->
-                    <div class="card m-3" style="width: 440px;">
-                        
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img src="img/hackerman-computers.jpg" style=" border-radius: 0 !important" class="p-2 card-img h-100" alt="...">
-                            </div>
-
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Curso de linux</h5>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                    
-                                    <div class="d-flex justify-content-between">
-                                        <h4 class="text-danger pb-1">$23.000</h4>
+                <div class="card-body separar">
+                    <a href="/payment/<%= courses[i].uniqueId %>"><h3 class="card-title text-primary"><%= courses[i].title %></h3></a>
     
-                                        <a href="/payment" class="btn btn-success py-2 px-4" style="border-radius: 0 !important">
-                                            Comprar  
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="datos-card">
+                        <p class="my-1"><i class="fa fa-user"></i> Participantes: <%= courses[i].participants_count %></p>
+                        <p class="my-1"><i class="fa fa-clock-o"></i> Publicado: <%= moment(courses[i].created_at).locale('es').startOf('minutes').fromNow() %></p>
                     </div>
-
-                    <div class="card m-3" style="width: 440px;">
-                        
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img src="img/phishing-scam-hacker-attack-web-security-vector-concept_53562-4864.jpg" style=" border-radius: 0 !important" class="p-2 card-img h-100" alt="...">
-                            </div>
-
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Curso de linux</h5>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                    
-                                    <div class="d-flex justify-content-between">
-                                        <h4 class="text-danger pb-1">$23.000</h4>
-    
-                                        <a href="/payment" class="btn btn-success py-2 px-4" style="border-radius: 0 !important">
-                                            Comprar  
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="d-flex justify-content-center mt-4">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
-        </div>
+        <% } %>
+    
     </div>
+</div>
+
+
+<div class="d-flex justify-content-center my-4">
+    <% if(pages){ %>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <!-- PRIMERO -->
+                <% if(current == 1){ %>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Primera página</a>
+                    </li>
+                <% }else{ %>
+                    <li class="page-item">
+                        <a class="page-link" href="/capacitaciones/1" tabindex="-1">Primera página</a>
+                    </li>
+                <% } %> 
+    
+                <!-- PAGES -->
+                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1)%>
+                <% if(i !== 1){ %>
+                        <li class="page-item">
+                            <a class="page-link" href="#">...</a>
+                        </li>
+                <% } %>  
+                
+                <% for(; i <= (Number(current + 4)) && i <= pages; i++) { %>
+                    <% if(i == current) { %>
+                        <li class="page-item active">
+                            <a class="page-link" href="/capacitaciones/<%= i %>"><%= i %></a>
+                        </li>
+                    <% }else{ %>
+                        <li class="page-item">
+                            <a class="page-link" href="/capacitaciones/<%= i %>"><%= i %></a>
+                        </li>
+                    <% } %>
+                <% } %>
+    
+                <% if(i == Number(current) + 4 && i < pages){ %>
+                    <li class="page-item">
+                        <a class="page-link" href="#">...</a>
+                    </li>
+                <% } %>  
+    
+                <!-- ULTIMO -->
+                <% if(current == pages){ %>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                <% }else{ %>
+                    <li class="page-item">
+                        <a class="page-link" href="/capacitaciones/<%= pages %>" tabindex="-1">Última página</a>
+                    </li>
+                <% } %> 
+            </ul>
+        </nav>
+    <% } %>   
+</div>                            
