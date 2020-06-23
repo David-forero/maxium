@@ -18,14 +18,15 @@ ctrl.payment = async (req, res) => {
 }
 
 ctrl.capacitaciones = async (req, res, next) => {
-    //const { tag } = req.params
-    let paginas = 1;
+    let tags = req.params.tag;
+    let paginas = 12;
     let page = req.params.page || 1;
 
     let title = "Capacitaciones";
     const counts = await Counts();
 
-    Cursos
+    if (tags === "todos") {
+        Cursos
         .find({})//que busque todo los datos
         .skip((paginas * page) - paginas) //formula necesaria para que calcule los datos
         .limit(paginas) //cuantos datos quieres por pagina
@@ -41,6 +42,35 @@ ctrl.capacitaciones = async (req, res, next) => {
                 });
             });
         }); 
+    } 
+    if (tags === "online") {
+        let online = "Online";
+        tagsFunction(online);
+    } 
+    if (tags === "presencial") {
+        let online = "Presencial";
+        tagsFunction(online);
+    } else {
+        res.send(`sirve el ${tag}`)
+    }
+    function tagsFunction (data) {
+        Cursos
+        .find({"modo": data})//que busque todo los datos
+        .skip((paginas * page) - paginas) //formula necesaria para que calcule los datos
+        .limit(paginas) //cuantos datos quieres por pagina
+        .exec((err, courses) => {//ejectuo la consulta
+            Cursos.count((err, count) =>{
+                if (err) return next(err);
+                res.render('capacitaciones', {
+                    title,
+                    counts,
+                    courses,
+                    current: page,
+                    pages: Math.ceil(count / paginas)
+                });
+            });
+        }); 
+    }
 }
 
 ctrl.contacto = async (req, res) =>{

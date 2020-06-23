@@ -11,7 +11,7 @@ const index = require('../controllers/index');
 
 router.get('/', index.index);
 
-router.get('/capacitaciones/:page', index.capacitaciones);
+router.get('/capacitaciones/:tag/:page', index.capacitaciones);
 
 router.get('/clientes', (req, res) => {
     let title = "Clientes";

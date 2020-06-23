@@ -2,11 +2,11 @@
 
 <div class="container p-4">
         <div class="d-flex justify-content-center flex-wrap mb-4">
-            <div class="btn btn-dark text-white mr-4 py-2 px-4" style="border-radius: 0 !important">Todos (<%= counts.courses %>)</div>
+            <a href="/capacitaciones/todos/1" class="btn btn-dark text-white mr-4 py-2 px-4" style="border-radius: 0 !important">Todos (<%= counts.courses %>)</a>
 
-            <div class="btn btn-dark text-white mr-4 py-2 px-4" style="border-radius: 0 !important">Online (<%= counts.online %>)</div>
+            <a href="/capacitaciones/online/1" class="btn btn-dark text-white mr-4 py-2 px-4" style="border-radius: 0 !important">Online (<%= counts.online %>)</a>
 
-            <div class="btn btn-dark text-white mr-4 py-2 px-4" style="border-radius: 0 !important">Presenciales (<%= counts.presencial %>)</div>
+            <a href="/capacitaciones/presencial/1" class="btn btn-dark text-white mr-4 py-2 px-4" style="border-radius: 0 !important">Presenciales (<%= counts.presencial %>)</a>
         </div>
 </div>
 
@@ -21,8 +21,10 @@
                     <a href="/payment/<%= courses[i].uniqueId %>"><h3 class="card-title text-primary"><%= courses[i].title %></h3></a>
     
                     <div class="datos-card">
-                        <p class="my-1"><i class="fa fa-user"></i> Participantes: <%= courses[i].participants_count %></p>
-                        <p class="my-1"><i class="fa fa-clock-o"></i> Publicado: <%= moment(courses[i].created_at).locale('es').startOf('minutes').fromNow() %></p>
+                        <p class="my-1"><b style="color: #750099;"><i class="fa fa-bullhorn"></i> Modalidad:</b> <%= courses[i].modo %></p>
+
+                        <p class="my-1"><b class="text-danger"><i class="fa fa-calendar-alt"></i> Fecha:</b> <%= moment(courses[i].day).format("DD/MM/YYYY") %></p>
+                        <p class="my-1"><b class="text-success"><i class="fas fa-money-bill-wave"></i> Costo:</b>  <%= Intl.NumberFormat("de-DE").format(courses[i].price)%>Bs</p>
                     </div>
                 </div>
             </div>
