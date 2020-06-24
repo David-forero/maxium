@@ -4,7 +4,7 @@ const passport = require('passport');
 
 //helpers
 const { isAuthenticated, isAdmin } = require('../helpers/auth');
-
+const MenuCourse = require('../helpers/menu_course');
 
 //controllers
 const index = require('../controllers/index');
@@ -13,56 +13,64 @@ router.get('/', index.index);
 
 router.get('/capacitaciones/:tag/:page', index.capacitaciones);
 
-router.get('/clientes', (req, res) => {
+router.get('/clientes', async (req, res) => {
     let title = "Clientes";
-    res.render('clientes', {title});
+    let menuCourse = await MenuCourse();
+    res.render('clientes', {title, menuCourse});
 });
 
-router.get('/contacto', (req, res) => {
+router.get('/contacto', async (req, res) => {
     let title = "Formulario de contacto";
-    res.render('contacto', {title});
+    let menuCourse = await MenuCourse();
+    res.render('contacto', {title, menuCourse});
 });
 
-router.get('/cumplimiento', (req, res) => {
+router.get('/cumplimiento', async (req, res) => {
     let title = "Cumplimiento";
-    res.render('cumplimiento', {title});
+    let menuCourse = await MenuCourse();
+    res.render('cumplimiento', {title, menuCourse});
 });
 
-router.get('/nosotros', (req, res) => {
+router.get('/nosotros', async (req, res) => {
     let title = "¿Quiénes somos?";
-    res.render('nosotros', {title});
+    let menuCourse = await MenuCourse();
+    res.render('nosotros', {title, menuCourse});
 });
 
-router.get('/noticias', (req, res) => {
+router.get('/noticias', async (req, res) => {
     let title = "Noticias";
-    res.render('noticias', {title});
+    let menuCourse = await MenuCourse();
+    res.render('noticias', {title, menuCourse});
 });
 
-router.get('/payment/:id', index.payment);
+router.get('/payment/:id', isAuthenticated, index.payment);
 
-router.get('/productos', (req, res) => {
+router.get('/productos', async (req, res) => {
     let title = "Productos";
-    res.render('productos', {title});
+    let menuCourse = await MenuCourse();
+    res.render('productos', {title, menuCourse});
 });
 
-router.get('/signin', (req, res) => {
+router.get('/signin', async (req, res) => {
     let title = "Maxium - Login";
-    res.render('auth/signin', {title});
+    let menuCourse = await MenuCourse();
+    res.render('auth/signin', {title, menuCourse});
 });
 
-router.get('/signup', (req, res) => {
+router.get('/signup', async (req, res) => {
     let title = "Registro";
-    res.render('auth/signup', {title});
+    let menuCourse = await MenuCourse();
+    res.render('auth/signup', {title, menuCourse});
 });
 
 router.post('/signin', passport.authenticate('local-signin', {
-    successRedirect: '/capacitaciones',
+    successRedirect: '/capacitaciones/todos/1',
     failureRedirect: '/signin',
     passReqToCallBack: true
 }))
 
 router.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/capacitaciones',
+    successRedirect: '/capacitaciones/todos/1',
     failureRedirect: '/signup',
     passReqToCallback: true
 }));

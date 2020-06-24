@@ -2,19 +2,25 @@ const fs = require('fs-extra');
 const path = require('path');
 const ctrl = {}
 const { Cursos } = require('../models');
+
+const MenuCourse = require('../helpers/menu_course');
 const Counts = require('../helpers/counts');
 
 ctrl.index = async (req, res) =>{
     const courses = await Cursos.find().limit(3).sort({created_at: -1});
+    const menuCourse = await MenuCourse();
+
     let title = "Maxium - Bienvenidos";
-    res.render('index', {title, courses});
+    res.render('index', {title, courses, menuCourse});
 }
 
 ctrl.payment = async (req, res) => {
     const { id } = req.params;
     const course = await Cursos.findOne({image: {$regex: id}});;
+    const menuCourse = await MenuCourse();
+
     let title = "Formulario de pago";
-    res.render('payment', {title, course});
+    res.render('payment', {title, course, menuCourse});
 }
 
 ctrl.capacitaciones = async (req, res, next) => {
@@ -23,38 +29,44 @@ ctrl.capacitaciones = async (req, res, next) => {
     let page = req.params.page || 1;
 
     let title = "Capacitaciones";
+    const menuCourse = await MenuCourse();
     const counts = await Counts();
 
-    if (tags === "todos") {
-        Cursos
-        .find({})//que busque todo los datos
-        .skip((paginas * page) - paginas) //formula necesaria para que calcule los datos
-        .limit(paginas) //cuantos datos quieres por pagina
-        .exec((err, courses) => {//ejectuo la consulta
-            Cursos.count((err, count) =>{
-                if (err) return next(err);
-                res.render('capacitaciones', {
-                    title,
-                    counts,
-                    courses,
-                    current: page,
-                    pages: Math.ceil(count / paginas)
-                });
-            });
-        }); 
-    } 
-    if (tags === "online") {
-        let online = "Online";
-        tagsFunction(online);
-    } 
-    if (tags === "presencial") {
-        let online = "Presencial";
-        tagsFunction(online);
-    } else {
-        res.send(`sirve el ${tag}`)
+    switch (tags) {
+        case 'online':
+            let onl = "Online";
+            tagsFunction(onl);
+        break;
+        case 'todos':
+            Cursos
+                .find({})//que busque todo los datos
+                .skip((paginas * page) - paginas) //formula necesaria para que calcule los datos
+                .limit(paginas) //cuantos datos quieres por pagina
+                .exec((err, courses) => {//ejectuo la consulta
+                    Cursos.count((err, count) =>{
+                        if (err) return next(err);
+                        res.render('capacitaciones', {
+                            title,
+                            counts,
+                            courses,
+                            menuCourse,
+                            current: page,
+                            pages: Math.ceil(count / paginas)
+                        });
+                    });
+                }); 
+        break;
+        case 'presencial':
+            let pres = "Presencial";
+            tagsFunction(pres);
+        break;
+        default: 
+            res.status(404).render('404');
+            break;
     }
-    function tagsFunction (data) {
-        Cursos
+
+    async function tagsFunction(data) {
+        await Cursos
         .find({"modo": data})//que busque todo los datos
         .skip((paginas * page) - paginas) //formula necesaria para que calcule los datos
         .limit(paginas) //cuantos datos quieres por pagina
@@ -65,12 +77,14 @@ ctrl.capacitaciones = async (req, res, next) => {
                     title,
                     counts,
                     courses,
+                    menuCourse,
                     current: page,
                     pages: Math.ceil(count / paginas)
                 });
             });
         }); 
     }
+
 }
 
 ctrl.contacto = async (req, res) =>{
@@ -85,7 +99,7 @@ ctrl.removeCourse = async (req, res) =>{
 
         
         req.flash('Success', 'Curso eliminado sastifactoriamente.')
-        res.redirect('/dashboard/courses')
+        res.redirect('/dashboard/courses');
     }
 }
 
