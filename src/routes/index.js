@@ -44,6 +44,7 @@ router.get('/noticias', async (req, res) => {
 });
 
 router.get('/payment/:id', isAuthenticated, index.payment);
+router.post('/payment/:id', isAuthenticated, index.paymentInsta);
 
 router.get('/productos', async (req, res) => {
     let title = "Productos";

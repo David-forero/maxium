@@ -1,8 +1,14 @@
 const fs = require('fs-extra');
 const path = require('path');
+const instapago = require('instapago');
+const ip = require('ip');
+
 const ctrl = {}
 const { Cursos } = require('../models');
+const i = instapago('FF8C1D44-EA01-4FC2-BC1F-2C61601DD705', '08092bc7fcc414feae9c9557f2cfd3e7');
 
+
+//Helpers
 const MenuCourse = require('../helpers/menu_course');
 const Counts = require('../helpers/counts');
 
@@ -21,6 +27,39 @@ ctrl.payment = async (req, res) => {
 
     let title = "Formulario de pago";
     res.render('payment', {title, course, menuCourse});
+}
+
+ctrl.paymentInsta = async (req, res)=>{
+    const { id } = req.params;
+    const { cardName, cardNumber, month, year, cvv } = req.body;
+    const course = await Cursos.findOne({image: {$regex: id}});
+    //4111111111111111
+    i.pay({
+        amount: course.price,
+        description: course.description,
+        cardholder: cardName,
+        cardholderid: req.user.ci,
+        cardnumber: cardNumber,
+        cvc: cvv,
+        expirationdate: `${month}/${year}`,
+        statusid: 2,
+        address: req.user.address,
+        zipcode: req.user.zip,
+        ip: ip.address()
+        }).then(respuesta => {
+        console.log(respuesta.data.id);
+        res.send(respuesta.data.voucher)
+    }).catch(error => {
+        res.send('ocurrio un error')
+    });
+
+    function voucher(data) {
+        i.view({
+            id: data
+          }).then(respuesta => {
+            console.log(respuesta.data);
+          }).catch(error => console.error(error));
+    }
 }
 
 ctrl.capacitaciones = async (req, res, next) => {
@@ -102,25 +141,5 @@ ctrl.removeCourse = async (req, res) =>{
         res.redirect('/dashboard/courses');
     }
 }
-
-// -------------------------INSTAPAGO----------------------------------
-
-// import instapago from 'instapago';
-
-// const i = instapago('<LLAVE-PRIVADA>', '<LLAVE-PÚBLICA>');
-
-// i.pay({
-//   amount: 60000,
-//   description: 'Probando el módulo Instapago',
-//   cardholder: 'Nombre Apellido',
-//   cardholderid: 12345678,
-//   cardnumber: 4111111111111111,
-//   cvc: 123,
-//   expirationdate: '10/2018',
-//   statusid: 2,
-//   ip: '127.0.0.1'
-// }).then(respuesta => {
-//   console.log(respuesta.data);
-// }).catch(error => console.error(error));
 
 module.exports = ctrl;

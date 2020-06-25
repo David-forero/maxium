@@ -38,7 +38,7 @@
                 </div>
         
                 <div class="col-md-5 col-sm-12 bg-light">
-                    <form action="" class="">
+                    <form action="/payment/<%= course.uniqueId %>" method="POST" class="">
                         <div class="p-4" >
                             <div class="form-group">
                                 <label for="">Nombre y Apellido de la tarjeta</label>
@@ -47,23 +47,23 @@
                 
                             <div class="form-group">
                                 <label for="">Número de tarjeta</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" name="cardNumber">
                             </div>
                 
                             <label class="w-100 d-block">Fecha de caducidad</label>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <select class="form-control">
+                                    <select class="form-control" name="month">
                                         <option selected disabled>Mes</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
                                         <option value="10">10</option>
                                         <option value="11">11</option>
                                         <option value="12">12</option>
@@ -71,7 +71,7 @@
                                 </div>
                 
                                 <div class="form-group col-md-3">
-                                    <select class="form-control">
+                                    <select class="form-control" name="year">
                                         <option selected disabled>Año</option>
                                         <option value="2020">2020</option>
                                         <option value="2021">2021</option>
@@ -88,7 +88,7 @@
                                 </div>
                 
                                 <div class="form-group col-md-3">
-                                    <input type="text" class="form-control" placeholder="CVV">
+                                    <input type="text" class="form-control" name="cvv" placeholder="CVV">
                                 </div>
                             </div>
     
