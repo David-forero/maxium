@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const passport = require('passport');
+const { Cursos } = require('../models/');
 
 //helpers
 const { isAuthenticated, isAdmin } = require('../helpers/auth');
