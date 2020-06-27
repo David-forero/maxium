@@ -24,7 +24,7 @@ passport.use('local-signup', new LocalStrategy({ //aca le damos los datos del cl
     var expresion = /\w+@+[a-z]+\.+[a-z]/;
 
     if (cedula) {
-        return done(null, false, req.flash('Data', data), req.flash('Error', 'La CI está en uso.'));
+        return done(null, false, req.flash('Data', data), req.flash('Error', 'La cédula está en uso.'));
     }
     if (user) {
         return done(null, false, req.flash('Data', data), req.flash('Error', 'El correo ya está en uso.'));
@@ -32,13 +32,18 @@ passport.use('local-signup', new LocalStrategy({ //aca le damos los datos del cl
     if (name === "" || lastname === "" || phone === "" || ci === "" || address === "" || city === "" || zip === "" || country === "") {
         return done(null, false, req.flash('Data', data), req.flash('Error', 'Por favor, no dejar los campos vacios.'));
     }
+    if (address.length > 100) {
+        return done(null, false, req.flash('Data', data), req.flash('Error', 'No pasarse de 100 caracteres'));
+    } 
     if (!expresion.test(email)) {
-        return done(null, false, req.flash('Data', data), req.flash('Error', 'Formato de correo incorrecto.'));
-        
+        return done(null, false, req.flash('Data', data), req.flash('Error', 'Formato de correo incorrecto.'));  
     }
     if (phone === !Number || ci === !Number) {
         return done(null, false, req.flash('Data', data), req.flash('Error', 'El teléfono y cedula deben ser numericos.'));
-    }  
+    } 
+    if (password.length < 5) {
+        return done(null, false, req.flash('Data', data), req.flash('Error', 'Contraseña debil.'));
+    } 
     if (password != password2) {
         return done(null, false, req.flash('Data', data), req.flash('Error', 'Las contraseñas no son iguales.'));
     } else{

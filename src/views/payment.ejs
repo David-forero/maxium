@@ -39,77 +39,158 @@
         
                 <div class="col-md-5 col-sm-12 bg-light">
                     <form action="/payment/<%= course.uniqueId %>" method="POST" class="">
-                        <div class="p-4" >
-                            <div class="form-group">
-                                <label for="">Nombre y Apellido de la tarjeta</label>
-                                <input placeholder="Ejemplo: Levan Torres" class="form-control" type="text" name="cardName">
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="">Número de tarjeta</label>
-                                <input type="text" class="form-control" name="cardNumber">
-                            </div>
-                
-                            <label class="w-100 d-block">Fecha de caducidad</label>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <select class="form-control" name="month">
-                                        <option selected disabled>Mes</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                    </select>
+                        <% if(data.length > 0){ %> 
+                            <div class="p-4" >
+                                <div class="form-group">
+                                    <label for="">Nombre y Apellido de la tarjeta</label>
+                                    <input placeholder="Ejemplo: Levan Torres" class="form-control" type="text" name="cardName" value="<%= data[0].cardName %>">
                                 </div>
-                
-                                <div class="form-group col-md-3">
-                                    <select class="form-control" name="year">
-                                        <option selected disabled>Año</option>
-                                        <option value="2020">2020</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2023">2023</option>
-                                        <option value="2024">2024</option>
-                                        <option value="2025">2025</option>
-                                        <option value="2026">2026</option>
-                                        <option value="2027">2027</option>
-                                        <option value="2028">2028</option>
-                                        <option value="2029">2029</option>
-                                        <option value="2030">2030</option>
-                                    </select>
+                    
+                                <div class="form-group">
+                                    <label for="">Número de tarjeta</label>
+                                    <input type="text" class="form-control" name="cardNumber" value="<%= data[0].cardNumber %>" required maxlength="16">
                                 </div>
-                
-                                <div class="form-group col-md-3">
-                                    <input type="text" class="form-control" name="cvv" placeholder="CVV">
+                    
+                                <label class="w-100 d-block">Fecha de caducidad</label>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <select class="form-control" name="month">
+                                            <option selected value="<%= data[0].month %>"><%= data[0].month %></option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                            <option value="04">04</option>
+                                            <option value="05">05</option>
+                                            <option value="06">06</option>
+                                            <option value="07">07</option>
+                                            <option value="08">08</option>
+                                            <option value="09">09</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+                    
+                                    <div class="form-group col-md-3">
+                                        <select class="form-control" name="year" required>
+                                            <option selected value="<%= data[0].month %>"><%= data[0].month %></option>
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2025">2025</option>
+                                            <option value="2026">2026</option>
+                                            <option value="2027">2027</option>
+                                            <option value="2028">2028</option>
+                                            <option value="2029">2029</option>
+                                            <option value="2030">2030</option>
+                                        </select>
+                                    </div>
+                    
+                                    <div class="form-group col-md-3">
+                                        <input type="text" class="form-control" name="cvv" required maxlength="3" placeholder="CVV" value="<%= data[0].month %>">
+                                    </div>
                                 </div>
-                            </div>
-    
-                            <div>
-                                <label style="display: block;" class="text-info">Métodos de pago aceptados:</label>
-                               
-                                <a href="#" class="text-danger" style="font-size: 30px;">
-                                    <i class="fa fa-cc-mastercard"></i>
-                                </a>
-                                
-                                <a href="#" style="font-size: 30px;">
-                                    <i class="fa fa-cc-visa"></i>
-                                </a>
-                            </div>
-                
-                            <div class="form-group d-flex flex-row-reverse mt-3">
-                                <button type="submit" class="btn btn-success py-2 px-4 btn-buy">
-                                    Comprar por <%= Intl.NumberFormat("de-DE").format(course.price)%>Bs <i class="fa fa-tag"></i>
-                                </button>
-                            </div>
+        
+                                <div>
+                                    <label style="display: block;" class="text-info">Métodos de pago aceptados:</label>
+                                   
+                                    <a href="#" class="text-danger" style="font-size: 30px;">
+                                        <i class="fa fa-cc-mastercard"></i>
+                                    </a>
+                                    
+                                    <a href="#" style="font-size: 30px;">
+                                        <i class="fa fa-cc-visa"></i>
+                                    </a>
+                                </div>
+                    
+                                <div class="form-group d-flex flex-row-reverse mt-3">
+                                    <button type="submit" class="btn btn-success py-2 px-4 btn-buy">
+                                        Comprar por <%= Intl.NumberFormat("de-DE").format(course.price)%>Bs <i class="fa fa-tag"></i>
+                                    </button>
+                                </div>
+                            </div>   
+                        <% }else{ %>
+                            <div class="p-4" >
+                                <div class="form-group">
+                                    <label for="">Nombre y Apellido de la tarjeta</label>
+                                    <input placeholder="Ejemplo: Levan Torres" class="form-control" type="text" name="cardName" required maxlength="30">
+                                </div>
+                    
+                                <div class="form-group">
+                                    <label for="">Número de tarjeta</label>
+                                    <input type="text" class="form-control" name="cardNumber" required maxlength="16">
+                                </div>
+                    
+                                <label class="w-100 d-block">Fecha de caducidad</label>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <select class="form-control" name="month" required>
+                                            <option selected disabled>Mes</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                            <option value="04">04</option>
+                                            <option value="05">05</option>
+                                            <option value="06">06</option>
+                                            <option value="07">07</option>
+                                            <option value="08">08</option>
+                                            <option value="09">09</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+                    
+                                    <div class="form-group col-md-3">
+                                        <select class="form-control" name="year" required>
+                                            <option selected disabled>Año</option>
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2025">2025</option>
+                                            <option value="2026">2026</option>
+                                            <option value="2027">2027</option>
+                                            <option value="2028">2028</option>
+                                            <option value="2029">2029</option>
+                                            <option value="2030">2030</option>
+                                        </select>
+                                    </div>
+                    
+                                    <div class="form-group col-md-3">
+                                        <input type="text" class="form-control" name="cvv" required placeholder="CVV" maxlength="3">
+                                    </div>
+                                </div>
+        
+                                <div>
+                                    <label style="display: block;" class="text-info">Métodos de pago aceptados:</label>
+                                   
+                                    <a href="#" class="text-danger" style="font-size: 30px;">
+                                        <i class="fa fa-cc-mastercard"></i>
+                                    </a>
+                                    
+                                    <a href="#" style="font-size: 30px;">
+                                        <i class="fa fa-cc-visa"></i>
+                                    </a>
+                                </div>
+                    
+                                <div class="form-group d-flex flex-row-reverse mt-3">
+                                    <button type="submit" class="btn btn-success py-2 px-4 btn-buy">
+                                        Comprar por <%= Intl.NumberFormat("de-DE").format(course.price)%>Bs <i class="fa fa-tag"></i>
+                                    </button>
+                                </div>
+                            </div> 
+                        <% } %>        
                     </form>
+
+                    <%if(error.length > 0){ %>
+                        <div class="alert alert-danger text-center">
+                            <%= error %>
+                        </div>
+                    <% } %>  
                 </div>
             </div>
 </div>

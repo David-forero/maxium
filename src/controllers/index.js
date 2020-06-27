@@ -4,7 +4,7 @@ const instapago = require('instapago');
 const ip = require('ip');
 
 const ctrl = {}
-const { Cursos } = require('../models');
+const { Cursos, Inscripciones } = require('../models');
 const i = instapago(process.env.INSTA_PUBLIC_KEY, process.env.INSTA_PRIVATE_KEY);
 
 
@@ -31,34 +31,49 @@ ctrl.payment = async (req, res) => {
 
 ctrl.paymentInsta = async (req, res)=>{
     const { id } = req.params;
+    const data = req.body;
     const { cardName, cardNumber, month, year, cvv } = req.body;
     const course = await Cursos.findOne({image: {$regex: id}});
-    //4111111111111111
-    i.pay({
-        amount: course.price,
-        description: course.description,
-        cardholder: cardName,
-        cardholderid: req.user.ci,
-        cardnumber: cardNumber,
-        cvc: cvv,
-        expirationdate: `${month}/${year}`,
-        statusid: 2,
-        address: req.user.address,
-        zipcode: req.user.zip,
-        ip: ip.address()
-        }).then(respuesta => {
-        console.log(respuesta.data.id);
-        res.send(respuesta.data.voucher)
-    }).catch(error => {
-        res.send('ocurrio un error')
-    });
-
-    function voucher(data) {
-        i.view({
-            id: data
-          }).then(respuesta => {
-            console.log(respuesta.data);
-          }).catch(error => console.error(error));
+    //card test: 4111111111111111
+    
+    if (cardName === "" || cardNumber === "" || month === "" || year === "" || cvv === "") {
+        req.flash('Data', data); 
+        req.flash('Error', 'Por favor, no dejar los campos vacios.');
+        res.redirect(`/payment/${id}`);
+    }
+    if (cardNumber === !Number || month === !Number || year === !Number || cvv === !Number) {
+        req.flash('Data', data); 
+        req.flash('Error', 'Compruebe que los campos sean numericos.');
+        res.redirect(`/payment/${id}`);
+    }
+    if (cardNumber.length > 16 || cardNumber.length < 16){
+        req.flash('Data', data); 
+        req.flash('Error', 'Verifique bien su numero de tarjeta.');
+        res.redirect(`/payment/${id}`);
+    }
+    if (cvv.length > 16 || cvv.length < 16){
+        req.flash('Data', data); 
+        req.flash('Error', 'Verifique bien el campo cvv.');
+        res.redirect(`/payment/${id}`);
+    } else {
+        i.pay({
+            amount: course.price,
+            description: course.description,
+            cardholder: cardName,
+            cardholderid: req.user.ci,
+            cardnumber: cardNumber,
+            cvc: cvv,
+            expirationdate: `${month}/${year}`,
+            statusid: 2,
+            address: req.user.address,
+            zipcode: req.user.zip,
+            ip: ip.address()
+            }).then(respuesta => {
+            console.log(respuesta.data.id);
+            res.send(respuesta.data.voucher)
+        }).catch(error => {
+            res.send('ocurrio un error')
+        });
     }
 }
 
