@@ -11,6 +11,7 @@ const multer = require('multer');
 
 // Init
 const app = express();
+require('dotenv').config();
 require('./database');
 require('./config/passport');
 

@@ -5,7 +5,7 @@ const ip = require('ip');
 
 const ctrl = {}
 const { Cursos } = require('../models');
-const i = instapago('FF8C1D44-EA01-4FC2-BC1F-2C61601DD705', '08092bc7fcc414feae9c9557f2cfd3e7');
+const i = instapago(process.env.INSTA_PUBLIC_KEY, process.env.INSTA_PRIVATE_KEY);
 
 
 //Helpers

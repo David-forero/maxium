@@ -1,5 +1,5 @@
 module.exports = {
     database: {
-        URL: 'mongodb://localhost/maxiumTest'
+        URL: process.env.PASSWORD_DB
     }
 }
