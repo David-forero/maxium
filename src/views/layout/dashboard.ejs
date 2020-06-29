@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/dashboard.css">
     <!-- ICONS -->
     <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous"> -->
     <!-- JQUERY -->
     <script src="/js/jquery.js"></script>
     
@@ -30,7 +31,7 @@
         </div>
 
         <div class="cart">
-            <a href="#"><i class="fa sign-out-alt"></i> Cerrar sessión</a>
+            <a href="/logout"><i class="fas fa-sign-out-alt"></i></a>
         </div>
 
         <div class="menu">
@@ -38,13 +39,14 @@
                 <i class="fa fa-times"></i>
             </div>
 
-            <ul>
+            <ul class="linieal">
                 <a href="/dashboard/home"> <li><i class="fa fa-home"></i> Inicio</li></a>
                 <a href="/dashboard/courses"><li><i class="fa fa-pencil"></i> Cursos</li></a>
                 <a href="/dashboard/news"><li><i class="fa fa-book"></i> Blog</li></a>
                 <a href="/dashboard/events"><li><i class="fa fa-flag"></i> Eventos</li></a>
-                <a href="/dashboard/users"><li id="bor"><i class="fa fa-users"></i> Permisos</li></a>
-
+                <% if(user.role === "admin" || user.role === "mod"){ %>
+                    <a href="/dashboard/users"><li><i class="fa fa-users"></i> Permisos</li></a>
+                <% } %>
             </ul>
         </div>
     </nav>

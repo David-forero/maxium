@@ -34,6 +34,10 @@ ctrl.paymentInsta = async (req, res)=>{
     const data = req.body;
     const { cardName, cardNumber, month, year, cvv } = req.body;
     const course = await Cursos.findOne({image: {$regex: id}});
+    const courses = await Cursos.find().limit(3);
+    const menuCourse = await MenuCourse();
+    let title = "Pago exitoso";
+
     //card test: 4111111111111111
     
     if (cardName === "" || cardNumber === "" || month === "" || year === "" || cvv === "") {
@@ -51,7 +55,7 @@ ctrl.paymentInsta = async (req, res)=>{
         req.flash('Error', 'Verifique bien su numero de tarjeta.');
         res.redirect(`/payment/${id}`);
     }
-    if (cvv.length > 16 || cvv.length < 16){
+    if (cvv.length > 3 || cvv.length < 3){
         req.flash('Data', data); 
         req.flash('Error', 'Verifique bien el campo cvv.');
         res.redirect(`/payment/${id}`);
@@ -68,10 +72,12 @@ ctrl.paymentInsta = async (req, res)=>{
             address: req.user.address,
             zipcode: req.user.zip,
             ip: ip.address()
-            }).then(respuesta => {
-            console.log(respuesta.data.id);
-            res.send(respuesta.data.voucher)
+            }).then(respuesta => {       
+            const voucher = respuesta.data;         
+            res.render('compra_exi', {courses, menuCourse, title, voucher})
+
         }).catch(error => {
+            console.log(error)
             res.send('ocurrio un error')
         });
     }

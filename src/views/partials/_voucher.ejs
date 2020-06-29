@@ -87,31 +87,27 @@
                 <td colspan="4" style="height: 8px;"></td>
               </tr>
               <tr>
-                <td colspan="2" class="normal-left">000000000000</td>
-                <td colspan="2" class="normal-right">000000000000</td>
+                <td colspan="2" class="normal-left"><%= voucher.approval %></td>
+                <td colspan="2" class="normal-right"><%= voucher.approval %></td>
               </tr>
               <tr>
                 <td colspan="1" class="normal-left">FECHA:</td>
-                <td colspan="3" class="normal-left">00/00/00 00:00:00 PM</td>
+                <td colspan="3" class="normal-left"><%= voucher.datetime %></td>
               </tr>
-              <tr>
-                <td colspan="1" class="normal-left">NRO CUENTA:</td>
-                <td colspan="2" class="normal-left">000000******0000</td>
-                <td class="normal-right">'0'</td>
-              </tr>
+
               <tr>
                 <td class="normal-left">NRO. REF.:</td>
-                <td class="normal-left">000000</td>
+                <td class="normal-left"><%= voucher.reference %></td>
                 <td class="normal-right">LOTE:</td>
-                <td class="normal-right">000</td>
+                <td class="normal-right"><%= voucher.lote %></td>
               </tr>
               <tr>
                 <td colspan="1" class="normal-left">APROBACION:</td>
-                <td colspan="3" class="normal-left">000000</td>
+                <td colspan="3" class="normal-left"><%= voucher.approval %></td>
               </tr>
               <tr>
                 <td colspan="1" class="normal-left">SECUENCIA:</td>
-                <td colspan="3" class="normal-left"></td>
+                <td colspan="3" class="normal-left"><%= voucher.sequence %></td>
               </tr>
               <tr>
                 <td colspan="4" style="height: 8px;"></td>
@@ -119,7 +115,7 @@
               <tr>
                 <td colspan="4" class="big-center">
                   <br />
-                  MONTO BS. 0,00
+                  MONTO BS. <%= voucher.amount %>
                 </td>
               </tr>
               <tr>
@@ -141,7 +137,7 @@
               </tr>
               <tr>
                 <td colspan="1" class="normal-left">ID:</td>
-                <td colspan="3" class="normal-left">000000000000000000</td>
+                <td colspan="3" class="normal-left"><%= voucher.id %></td>
               </tr>
             </table>
           </div>

@@ -104,8 +104,6 @@ a{
 .menu ul a li{
     padding: 20px !important;
     border-top: 1px solid #2d2d2d52 !important;
-}#bor{
-    border-bottom: 1px solid #2d2d2d52 !important;
 }
 
 .menu ul a li{
@@ -115,6 +113,10 @@ a{
 
 .menu ul a li:hover{
     background: whitesmoke;
+}
+
+.linieal a:last-child li{
+    border-bottom: 1px solid #2d2d2d52 !important; 
 }
 
 /* Scroll */

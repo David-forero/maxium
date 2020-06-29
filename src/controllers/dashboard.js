@@ -95,18 +95,24 @@ ctrl.courseEdit = async (req, res) =>{
 //=================== Users
 
 ctrl.getUsers = async (req, res) =>{
-    let title = "Dashboard - Permisos de Usuario"
-    const users = await User.find({ "role" : { "$in": ["mod", "helper"]} });
-    res.render('dashboard/users', {users, title});
+    
+    if (req.user.role === "admin" || req.user.role === "mod") {
+        let title = "Dashboard - Permisos de Usuario";
+        const users = await User.find({ "role" : { "$in": ["mod", "helper"]} });
+        res.render('dashboard/users', {users, title});
+    } else {
+        res.status(404).render('404');
+    }
 }
 
 ctrl.addUsers = async (req, res) =>{
     const { name, lastname, email, password, passwordConfirm, role} = req.body;
     const newUser = new User({name, lastname, email, password, role});
     newUser.password = newUser.encryptPassword(password);
-
+   
     if (password != passwordConfirm) {
-        req.flash('Error', 'Confirme bien su contraseña.')
+        req.flash('Error', 'Confirme bien su contraseña.');
+        res.redirect('/dashboard/users');
     } else {
         await newUser.save();
         res.redirect('/dashboard/users');
@@ -120,9 +126,10 @@ ctrl.deleteUser = async (req, res) =>{
 }
 
 ctrl.getUserForUpdate = async (req, res) =>{
+    let title = "Dashboard - Editar Usuario";
     const { id } = req.params;
     const edit = await User.findById(id);
-    res.render('dashboard/edits/edit_user', {edit});
+    res.render('dashboard/edits/edit_user', {edit, title});
 }
 
 ctrl.userEdit = async (req, res) =>{

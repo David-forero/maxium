@@ -9,7 +9,7 @@ helper.isAuthenticated = (req, res, next) => {
 }
 
 helper.isAdmin = (req, res, next) => {
-    if (req.user && req.user.role === 'admin')
+    if (req.user && req.user.role === 'admin' || req.user.role === "helper" || req.user.role === "mod")
         return next();
     return res.render('404');
 };
