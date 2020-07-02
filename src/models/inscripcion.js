@@ -8,6 +8,7 @@ const inscripcionSchema = new Schema({
     name_user: {type: String, required: true},
     lastname_user: {type: String, required: true},
     email: {type: String, required: true},
+    id_voucher: {type: String, required: true}
 })
 
 module.exports = mongoose.model('inscripciones', inscripcionSchema);

@@ -1,4 +1,4 @@
-const { User, Cursos } = require('../models/index');
+const { User, Cursos, Inscripciones } = require('../models/index');
 const path = require('path');
 const fs = require('fs-extra');
 //const md5 = require('md5');
@@ -12,7 +12,7 @@ const ctrl = {}
 //=================== Home
 
 ctrl.getStadis = async (req, res) =>{
-    let title = "Dashboard - Inicio"
+    let title = "Dashboard - Inicio";
     const courses = await Cursos.find().limit(4).sort({created_at: -1});
     res.render('dashboard/index', {title, courses});
 }
@@ -20,7 +20,7 @@ ctrl.getStadis = async (req, res) =>{
 //=================== Courses
 
 ctrl.getCourses = async (req, res) =>{
-    let title = "Dashboard - Cursos"
+    let title = "Dashboard - Cursos";
     const courses = await Cursos.find().sort({created_at: -1});
     res.render('dashboard/cursos', {title, courses});
 }
@@ -66,20 +66,6 @@ ctrl.addCourse = async (req, res) =>{
     saveImage();
 }
 
-ctrl.removeCourse = async (req, res) =>{
-    if (confirm('¿Esta seguro de eliminar este curso?')) {
-        const image = await Cursos.findOne({image: {$regex: req.params.id}});
-        if (image) {
-            await fs.unlink(path.resolve('./src/public/uploads/' + image.image));
-            await image.remove();
-
-            
-            req.flah('Success', 'Curso eliminado sastifactoriamente.')
-            res.redirect('/dashboard/courses')
-        }
-    }
-}
-
 ctrl.getCourseForUpdate = async (req, res) =>{
     let title = "Modificar curso";
     const edit = await Cursos.findOne({image: {$regex: req.params.id}});
@@ -98,7 +84,7 @@ ctrl.getUsers = async (req, res) =>{
     
     if (req.user.role === "admin" || req.user.role === "mod") {
         let title = "Dashboard - Permisos de Usuario";
-        const users = await User.find({ "role" : { "$in": ["mod", "helper"]} });
+        const users = await User.find({ "role": { "$in": ["mod", "helper"]} });
         res.render('dashboard/users', {users, title});
     } else {
         res.status(404).render('404');
@@ -136,6 +122,13 @@ ctrl.userEdit = async (req, res) =>{
     const { id } = req.params;
     await User.update({_id:id}, req.body);
     res.redirect('/dashboard/users');
+}
+
+//===================== Settings
+
+ctrl.getSettings = async (req, res) =>{
+    let title = "Dashboard - Configuraciones";
+    res.render('dashboard/settings', {title})
 }
 
 module.exports = ctrl;

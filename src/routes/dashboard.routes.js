@@ -15,11 +15,11 @@ router.get('/course/edit/:id', isAuthenticated, isAdmin, dashboard.getCourseForU
 router.post('/course/edit/:id', isAuthenticated, isAdmin, dashboard.courseEdit);
 
 router.get('/news', isAuthenticated, isAdmin, (req, res) =>{
-    res.render('dashboard/index');
+    res.send('En desarrollo...');
 })
 
 router.get('/events', isAuthenticated, isAdmin, (req, res) =>{
-    res.render('dashboard/index');
+    res.send('En desarrollo...');
 })
 
 router.get('/users', isAuthenticated, isAdmin, dashboard.getUsers);
@@ -27,5 +27,8 @@ router.post('/add/users', isAuthenticated, isAdmin, dashboard.addUsers);
 router.get('/user_delete/:id', isAuthenticated, isAdmin, dashboard.deleteUser);
 router.get('/user_edit/:id', isAuthenticated, isAdmin, dashboard.getUserForUpdate);
 router.post('/user_edit/:id', isAuthenticated, isAdmin, dashboard.userEdit);
+
+router.get('/config', isAuthenticated, isAdmin, dashboard.getSettings);
+//router.get('/config/password', isAuthenticated, isAdmin, dashboard.getSettings);
 
 module.exports = router;

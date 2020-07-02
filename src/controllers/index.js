@@ -7,7 +7,6 @@ const ctrl = {}
 const { Cursos, Inscripciones } = require('../models');
 const i = instapago(process.env.INSTA_PUBLIC_KEY, process.env.INSTA_PRIVATE_KEY);
 
-
 //Helpers
 const MenuCourse = require('../helpers/menu_course');
 const Counts = require('../helpers/counts');
@@ -22,21 +21,45 @@ ctrl.index = async (req, res) =>{
 
 ctrl.payment = async (req, res) => {
     const { id } = req.params;
-    const course = await Cursos.findOne({image: {$regex: id}});;
+    const course = await Cursos.findOne({image: {$regex: id}});
+    const userCi = req.user.ci;
+
+    //const inscripcion es para recorrer todos los que estan inscritos
+    const inscripciones = await Inscripciones.find({id_course: {$regex: id}});
+    //const inscrito es para validar si el usuario ya se ha inscrito
+    const inscrito = await Inscripciones.findOne({ci_user: userCi, id_course: id})
     const menuCourse = await MenuCourse();
 
     let title = "Formulario de pago";
-    res.render('payment', {title, course, menuCourse});
+    res.render('payment', {title, course, menuCourse, inscripciones, inscrito});
 }
 
 ctrl.paymentInsta = async (req, res)=>{
     const { id } = req.params;
-    const data = req.body;
+    const data = req.body; //para devolver los datos
     const { cardName, cardNumber, month, year, cvv } = req.body;
+
     const course = await Cursos.findOne({image: {$regex: id}});
-    const courses = await Cursos.find().limit(3);
+    const courses = await Cursos.find().limit(3); //para imprimir los cursos 
     const menuCourse = await MenuCourse();
     let title = "Pago exitoso";
+
+    async function inscripcion(data) {
+        course.participants_count = course.participants_count + 1;
+        await course.save();
+        //User data
+        const newInscripcion = new Inscripciones({
+            id_course: course.uniqueId,
+            title_course: course.title,
+            ci_user: req.user.ci,
+            name_user: req.user.name,
+            lastname_user: req.user.lastname,
+            email: req.user.email,
+            id_voucher: data
+        });
+        
+        await newInscripcion.save();
+    }
 
     //card test: 4111111111111111
     
@@ -62,7 +85,7 @@ ctrl.paymentInsta = async (req, res)=>{
     } else {
         i.pay({
             amount: course.price,
-            description: course.description,
+            description: course.title,
             cardholder: cardName,
             cardholderid: req.user.ci,
             cardnumber: cardNumber,
@@ -72,13 +95,15 @@ ctrl.paymentInsta = async (req, res)=>{
             address: req.user.address,
             zipcode: req.user.zip,
             ip: ip.address()
-            }).then(respuesta => {       
+            }).then(respuesta => {  
+
             const voucher = respuesta.data;         
             res.render('compra_exi', {courses, menuCourse, title, voucher})
+            inscripcion(respuesta.data.id); 
 
         }).catch(error => {
             console.log(error)
-            res.send('ocurrio un error')
+            res.send('Ocurrio un error, Envianos un mensaje a nosotros y informe este problema');
         });
     }
 }
@@ -152,15 +177,18 @@ ctrl.contacto = async (req, res) =>{
 }
 
 ctrl.removeCourse = async (req, res) =>{
-    const image = await Cursos.findOne({image: {$regex: req.params.id}});
-    if (image) {
-        await fs.unlink(path.resolve('./src/public/uploads/' + image.image));
-        await image.remove();
-
+        const image = await Cursos.findOne({image: {$regex: req.params.id}});
         
-        req.flash('Success', 'Curso eliminado sastifactoriamente.')
-        res.redirect('/dashboard/courses');
-    }
+        if (image) {
+            
+            await Inscripciones.find({id_course: image.uniqueId}).remove();
+            await fs.unlink(path.resolve('./src/public/uploads/' + image.image));
+            await image.remove();
+            
+            req.flash('Success', 'Curso eliminado sastifactoriamente.')
+            res.redirect('/dashboard/courses');
+        }
+    
 }
 
 module.exports = ctrl;
