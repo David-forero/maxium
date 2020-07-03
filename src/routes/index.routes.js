@@ -94,7 +94,7 @@ router.post('/nc-newAdmin', async (req, res) =>{
     const { name, email, password } = req.body;
     if (name === "" || email === "" || password === "") {
         req.flash('Error', "No dejar campos vacios")
-        res.redirect('/dashboard/nc-login');
+        res.redirect('/nc-login');
     }else{
         const newAdmin = new User();
         newAdmin.name = name;
@@ -103,7 +103,7 @@ router.post('/nc-newAdmin', async (req, res) =>{
         newAdmin.password = newAdmin.encryptPassword(password);
         
         await newAdmin.save();
-        res.redirect('/dashboard/nc-login');
+        res.redirect('/nc-login');
     }
 })
 
