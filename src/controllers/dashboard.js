@@ -13,8 +13,10 @@ const ctrl = {}
 
 ctrl.getStadis = async (req, res) =>{
     let title = "Dashboard - Inicio";
+    const counts = await Counts();
+
     const courses = await Cursos.find().limit(4).sort({created_at: -1});
-    res.render('dashboard/index', {title, courses});
+    res.render('dashboard/index', {title, courses, counts});
 }
 
 //=================== Courses
@@ -120,7 +122,7 @@ ctrl.getUserForUpdate = async (req, res) =>{
 
 ctrl.userEdit = async (req, res) =>{
     const { id } = req.params;
-    await User.update({_id:id}, req.body);
+    await User.updateOne({_id:id}, req.body);
     res.redirect('/dashboard/users');
 }
 
@@ -140,32 +142,38 @@ ctrl.settingPassword = async (req, res) =>{
         req.flash('Data', data);
         req.flash('Error', 'No deje campos vacios.');
         res.redirect('/dashboard/config');
-    }
-    if (!user.comparePassword(password_old)) {
-        req.flash('Data', data);
-        req.flash('Error', 'La contraseña vieja no es correcta.');
-        res.redirect('/dashboard/config');
-    }
-    if(passwordNew.length > 6){
-        req.flash('Data', data);
-        req.flash('Error', 'la contraseña debe ser mas de 6 caracteres.');
-        res.redirect('/dashboard/config');
-    }
-    if (passwordNew != passwordNew2) {
-        req.flash('Data', data);
-        req.flash('Error', 'Confirme bien su contraseña.');
-        res.redirect('/dashboard/config');
-    } else {
-        const newPassword = await User.findById(_id);
-        newPassword.password = newPassword.encryptPassword(passwordNew);
-        let nuevaClave = {
-            password: newPassword.password
+    }else{
+        if (!user.comparePassword(password_old)) {
+            req.flash('Data', data);
+            req.flash('Error', 'La contraseña vieja no es correcta.');
+            res.redirect('/dashboard/config');
+        }else{
+            
+        if(passwordNew.length < 6){
+            req.flash('Data', data);
+            req.flash('Error', 'la contraseña debe ser mas de 6 caracteres.');
+            res.redirect('/dashboard/config');
+        }else{
+            if (passwordNew != passwordNew2) {
+                req.flash('Data', data);
+                req.flash('Error', 'Confirme bien su contraseña.');
+                res.redirect('/dashboard/config');
+            } else {
+                const newPassword = await User.findById(_id);
+                newPassword.password = newPassword.encryptPassword(passwordNew);
+                let nuevaClave = {
+                    password: newPassword.password
+                }
+        
+                req.flash('Success', 'has cambiando tu nueva contraseña correctamente.');
+                await User.updateOne({_id: _id}, nuevaClave);
+                res.redirect('/dashboard/config');
+            }
         }
-
-        req.flash('Success', 'has cambiando tu nueva contraseña correctamente.');
-        await User.update({_id: _id}, nuevaClave);
-        res.redirect('/dashboard/config');
+        
+        }
     }
+    
 }
 
 module.exports = ctrl;

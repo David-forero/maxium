@@ -6,7 +6,7 @@
     <div class="col-lg-8 mt-5 wow fadeInLeft" data-wow-delay="0.2s">
         <div class="card">
             <div class="card-header bg-dark text-white">
-                <h3>Estadísticas <i class="fa fa-bar-chart"></i></h3>
+                <h3>Estadísticas <i class="fa fa-bar-chart"></i> </h3>
             </div>
 
             <div class="card-body">
@@ -19,19 +19,19 @@
     
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Cursos: 12</div>
+                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Cursos: <%= counts.courses %></div>
                         </div>
     
                         <div class="form-group">
-                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Noticas: 154</div>
+                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Noticas: 0</div>
                         </div>
     
                         <div class="form-group">
-                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Eventos: 4</div>
+                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Eventos: 0</div>
                         </div>
     
                         <div class="form-group">
-                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Usuarios: 2301</div>
+                            <div class="col-md-12 bg-success text-white py-2 px-4 text-center">Usuarios: <%= counts.users %></div>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
     </div>
 </div>
 
-<!-- <script src="/js/Chart.bundle.min.js"></script> -->
+<script src="/js/Chart.bundle.min.js"></script>
  <script>
     $(document).ready(function() {
         let datos = {
@@ -95,8 +95,8 @@
             data : {
 				datasets :[{
 					data : [
-						5,
-						50,
+                        <%= counts.panama %>,
+						<%= counts.venezuela %>,
 					],
 					backgroundColor: [
 						"#F7464A",
