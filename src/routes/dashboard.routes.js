@@ -29,6 +29,6 @@ router.get('/user_edit/:id', isAuthenticated, isAdmin, dashboard.getUserForUpdat
 router.post('/user_edit/:id', isAuthenticated, isAdmin, dashboard.userEdit);
 
 router.get('/config', isAuthenticated, isAdmin, dashboard.getSettings);
-//router.get('/config/password', isAuthenticated, isAdmin, dashboard.getSettings);
+router.post('/config/password', isAuthenticated, isAdmin, dashboard.settingPassword);
 
 module.exports = router;

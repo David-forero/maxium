@@ -87,21 +87,27 @@
     </div>
 </div>
 
-<script src="/js/Chart.bundle.min.js"></script>
+<!-- <script src="/js/Chart.bundle.min.js"></script> -->
  <script>
     $(document).ready(function() {
         let datos = {
             type: 'pie',
-            data:{
-                datasets:[{
-                    data:[20, 100],
-                    backgroudColor:['#F7464A', '#46BFBD']
-                }],
-                Labels: [
-                    "Venezuela",
-                    "Panamá"
-                ]
-            },
+            data : {
+				datasets :[{
+					data : [
+						5,
+						50,
+					],
+					backgroundColor: [
+						"#F7464A",
+						"#46BFBD",
+					],
+				}],
+				labels : [
+					"Panáma",
+					"Venezuela"
+				]
+			},
             option:{
                 responsive: true
             }

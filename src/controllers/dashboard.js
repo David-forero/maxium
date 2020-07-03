@@ -1,4 +1,4 @@
-const { User, Cursos, Inscripciones } = require('../models/index');
+const { User, Cursos } = require('../models/index');
 const path = require('path');
 const fs = require('fs-extra');
 //const md5 = require('md5');
@@ -129,6 +129,43 @@ ctrl.userEdit = async (req, res) =>{
 ctrl.getSettings = async (req, res) =>{
     let title = "Dashboard - Configuraciones";
     res.render('dashboard/settings', {title})
+}
+
+ctrl.settingPassword = async (req, res) =>{
+    const data = req.body;
+    const {email, _id} = req.user;
+    const user = await User.findOne({email: email});
+    const { password_old, passwordNew, passwordNew2 } = req.body;
+    if (password_old === "" || passwordNew === "" || passwordNew2 === "") {
+        req.flash('Data', data);
+        req.flash('Error', 'No deje campos vacios.');
+        res.redirect('/dashboard/config');
+    }
+    if (!user.comparePassword(password_old)) {
+        req.flash('Data', data);
+        req.flash('Error', 'La contraseña vieja no es correcta.');
+        res.redirect('/dashboard/config');
+    }
+    if(passwordNew.length > 6){
+        req.flash('Data', data);
+        req.flash('Error', 'la contraseña debe ser mas de 6 caracteres.');
+        res.redirect('/dashboard/config');
+    }
+    if (passwordNew != passwordNew2) {
+        req.flash('Data', data);
+        req.flash('Error', 'Confirme bien su contraseña.');
+        res.redirect('/dashboard/config');
+    } else {
+        const newPassword = await User.findById(_id);
+        newPassword.password = newPassword.encryptPassword(passwordNew);
+        let nuevaClave = {
+            password: newPassword.password
+        }
+
+        req.flash('Success', 'has cambiando tu nueva contraseña correctamente.');
+        await User.update({_id: _id}, nuevaClave);
+        res.redirect('/dashboard/config');
+    }
 }
 
 module.exports = ctrl;

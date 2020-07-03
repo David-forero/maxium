@@ -60,8 +60,6 @@ passport.use('local-signup', new LocalStrategy({ //aca le damos los datos del cl
         newUser.zip = zip;
         newUser.country = country;
 
-        console.log(newUser);
-
         await newUser.save();
         done(null, newUser)
     }

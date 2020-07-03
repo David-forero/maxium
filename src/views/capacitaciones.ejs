@@ -21,10 +21,10 @@
                     <a href="/payment/<%= courses[i].uniqueId %>"><h3 class="card-title text-primary"><%= courses[i].title %></h3></a>
     
                     <div class="datos-card">
-                        <p class="my-1"><b style="color: #750099;"><i class="fa fa-bullhorn"></i> Modalidad:</b> <%= courses[i].modo %></p>
+                        <p class="my-1"><b><i class="fa fa-bullhorn"></i> Modalidad:</b> <%= courses[i].modo %></p>
 
-                        <p class="my-1"><b class="text-danger"><i class="fa fa-calendar-alt"></i> Fecha:</b> <%= moment(courses[i].day).format("DD/MM/YYYY") %></p>
-                        <p class="my-1"><b class="text-success"><i class="fas fa-money-bill-wave"></i> Costo:</b>  <%= Intl.NumberFormat("de-DE").format(courses[i].price)%>Bs</p>
+                        <p class="my-1"><b><i class="fa fa-calendar-alt"></i> Fecha:</b> <%= moment(courses[i].day).format("DD/MM/YYYY") %></p>
+                        <p class="my-1"><b><i class="fas fa-money-bill-wave"></i> Costo:</b>  <%= Intl.NumberFormat("de-DE").format(courses[i].price)%>Bs</p>
                     </div>
                 </div>
             </div>
