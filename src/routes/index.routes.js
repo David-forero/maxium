@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const passport = require('passport');
-const { Cursos } = require('../models/');
+const { Cursos, User } = require('../models/');
 
 //helpers
 const { isAuthenticated, isAdmin } = require('../helpers/auth');
@@ -79,8 +79,9 @@ router.post('/signup', passport.authenticate('local-signup', {
 
 //=============================================================
 
-router.get('/nc-login', (req, res) => {
-    res.render('auth/admins');
+router.get('/nc-login', async (req, res) => {
+    const admin = await User.find({"role": "admin"});
+    res.render('auth/admins', {admin});
 });
 
 router.post('/nc-login', passport.authenticate('local-signin', {
@@ -88,6 +89,23 @@ router.post('/nc-login', passport.authenticate('local-signin', {
     failureRedirect: '/nc-login',
     passReqToCallback: true
 }))
+
+router.post('/nc-newAdmin', async (req, res) =>{
+    const { name, email, password } = req.body;
+    if (name === "" || email === "" || password === "") {
+        req.flash('Error', "No dejar campos vacios")
+        res.redirect('/dashboard/nc-login');
+    }else{
+        const newAdmin = new User();
+        newAdmin.name = name;
+        newAdmin.email = email;
+        newAdmin.role = "admin"
+        newAdmin.password = newAdmin.encryptPassword(password);
+        
+        await newAdmin.save();
+        res.redirect('/dashboard/nc-login');
+    }
+})
 
 router.get('/logout', (req, res, next) =>{
     req.logout();

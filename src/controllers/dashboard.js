@@ -1,7 +1,6 @@
 const { User, Cursos } = require('../models/index');
 const path = require('path');
 const fs = require('fs-extra');
-//const md5 = require('md5');
 
 // Helpers
 const Counts = require('../helpers/counts')

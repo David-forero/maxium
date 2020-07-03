@@ -72,9 +72,9 @@ passport.use('local-signin', new LocalStrategy({
 }, async (req, email, password, done) =>{
     const user = await User.findOne({email: email});
     if (!user) {
-        return done(null, false, req.flash('Error', 'Usuario no encontrado.'));
+        return done(null, false, req.flash('Error', 'Usuario o Clave incorrecto.'));
     }if (!user.comparePassword(password)) { //comparamos la clave que inserto
-        return done(null, false, req.flash('Error', 'Contraseña incorrecta.'));
+        return done(null, false, req.flash('Error', 'Usuario o Clave incorrecto.'));
     }else{
         done(null, user)
     }
