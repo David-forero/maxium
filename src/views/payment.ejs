@@ -25,7 +25,7 @@
                                     <li class="list-group-item">Consultor: <%= course.consultant %></li>
                                 </ul>
 
-                                <% if(user.role === "admin"){%>
+                                <% if(user.role === "admin" || user.role === "mod"){%>
                                     <div class="d-flex justify-content-between">
                                         <a href="/dashboard/course/edit/<%= course.uniqueId %>" class="btn btn-success mt-3">Modificar</a>
 
@@ -237,6 +237,23 @@
                                         </button>
                                     </div>
                                 </div> 
+                            <% } %>
+
+                            <br>
+                            <br>
+                            <% if(user.role != "user"){%>
+                                <h4 class="text-danger">Usuarios inscritos <i class="fa fa-users"></i></h4>
+
+                                <% for(let i=0; i < inscripciones.length; i++){ %>
+                                    <div class="card card-body my-3">
+                                        <div class="d-flex justify-content-between">
+                                            <h5><%= inscripciones[i].name_user %> <%= inscripciones[i].lastname_user %></h5> <p style="color:gray"><%= inscripciones[i].email %></p>
+                                        </div>
+
+                                        <p class="m-0">Cédula: <%= inscripciones[i].ci_user %></p>
+                                        <p class="m-0">Voucher: <%= inscripciones[i].id_voucher %></p>
+                                    </div>
+                                <% } %>    
                             <% } %>
                         <% } %> 
                              
