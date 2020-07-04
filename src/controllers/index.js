@@ -102,8 +102,9 @@ ctrl.paymentInsta = async (req, res)=>{
             inscripcion(respuesta.data.id); 
 
         }).catch(error => {
-            console.log(error)
-            res.send('Ocurrio un error, Envianos un mensaje a nosotros y informe este problema');
+            req.flash('Data', data); 
+            req.flash('Error', error);
+            res.redirect(`/payment/${id}`);
         });
     }
 }
