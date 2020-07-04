@@ -47,21 +47,30 @@ passport.use('local-signup', new LocalStrategy({ //aca le damos los datos del cl
     if (password != password2) {
         return done(null, false, req.flash('Data', data), req.flash('Error', 'Las contraseñas no son iguales.'));
     } else{
-        const newUser = new User();
-        newUser.email = email;
-        newUser.password = newUser.encryptPassword(password);
+        if (ci.length < 4) {
+            return done(null, false, req.flash('Data', data), req.flash('Error', 'Escriba bien su documento de identidad.'));
+        }else{
+            if (phone.length < 10) {
+                return done(null, false, req.flash('Data', data), req.flash('Error', 'Escriba bien su numero de teléfono.'));
+            }else{
+                const newUser = new User();
+                newUser.email = email;
+                newUser.password = newUser.encryptPassword(password);
 
-        newUser.name = name;
-        newUser.lastname = lastname;
-        newUser.phone = phone;
-        newUser.ci = ci;
-        newUser.address = address;
-        newUser.city = city;
-        newUser.zip = zip;
-        newUser.country = country;
+                newUser.name = name;
+                newUser.lastname = lastname;
+                newUser.phone = phone;
+                newUser.ci = ci;
+                newUser.address = address;
+                newUser.city = city;
+                newUser.zip = zip;
+                newUser.country = country;
 
-        await newUser.save();
-        done(null, newUser)
+                await newUser.save();
+                done(null, newUser)
+            }
+
+        }
     }
 }));
 
