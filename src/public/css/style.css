@@ -408,6 +408,12 @@ a {
 	background-position-y: 5px;
 }
 
+@media screen and (max-width: 480px){
+	.section-1 .hero{
+		background-attachment: unset;
+	}
+}
+
 .imgs-bg{
 	width: 100%;
 	height: 100%;
