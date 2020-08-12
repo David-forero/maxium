@@ -74,7 +74,7 @@
                                 <button class="btn-regresar"><i class="fa fa-arrow-left"></i>Regresar</button>
                                 <h3 class="subtitulo">Cursos Presenciales </h3>
                                 <% for(let i=0; i < menuCourse.presencial_m.length; i++){ %>
-                                    <a href="/payment/<%= menuCourse.presencial_m[i].uniqueId %>"><%= menuCourse.presencial_m[i].title %></a>
+                                    <a href="/payment/<%= menuCourse.presencial_m[i].public_img_id %>"><%= menuCourse.presencial_m[i].title %></a>
                                 <% } %>
                                 <a class="text-info" href="/capacitaciones/todos/1">Ver más Cursos</a>
                             </div>
@@ -106,7 +106,7 @@
                                 <button class="btn-regresar"><i class="fa fa-arrow-left"></i>Regresar</button>
                                 <h3 class="subtitulo">Cursos Online</h3>
                                 <% for(let i=0; i < menuCourse.online_m.length; i++){ %>
-                                    <a href="/payment/<%= menuCourse.online_m[i].uniqueId %>"><%= menuCourse.online_m[i].title %></a>
+                                    <a href="/payment/<%= menuCourse.online_m[i].public_img_id %>"><%= menuCourse.online_m[i].title %></a>
                                 <% } %>
                                 <a class="text-info" href="/capacitaciones/todos/1">Ver más Cursos</a>
                             </div>

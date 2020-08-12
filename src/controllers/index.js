@@ -3,6 +3,14 @@ const path = require('path');
 const instapago = require('instapago');
 const ip = require('ip');
 
+const cloudinary = require('cloudinary');
+
+cloudinary.config({//loguearme para consumir la api
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
+
 const ctrl = {}
 const { Cursos, Inscripciones } = require('../models');
 const i = instapago(process.env.INSTA_PUBLIC_KEY, process.env.INSTA_PRIVATE_KEY);
@@ -21,7 +29,7 @@ ctrl.index = async (req, res) =>{
 
 ctrl.payment = async (req, res) => {
     const { id } = req.params;
-    const course = await Cursos.findOne({image: {$regex: id}});
+    const course = await Cursos.findOne({public_img_id: {$regex: id}});
     const userCi = req.user.ci;
 
     //const inscripcion es para recorrer todos los que estan inscritos
@@ -39,7 +47,7 @@ ctrl.paymentInsta = async (req, res)=>{
     const data = req.body; //para devolver los datos
     const { cardName, cardNumber, month, year, cvv } = req.body;
 
-    const course = await Cursos.findOne({image: {$regex: id}});
+    const course = await Cursos.findOne({public_img_id: {$regex: id}});
     const courses = await Cursos.find().limit(3); //para imprimir los cursos 
     const menuCourse = await MenuCourse();
     let title = "Pago exitoso";
@@ -49,7 +57,7 @@ ctrl.paymentInsta = async (req, res)=>{
         await course.save();
         //User data
         const newInscripcion = new Inscripciones({
-            id_course: course.uniqueId,
+            id_course: course.public_img_id,
             title_course: course.title,
             ci_user: req.user.ci,
             name_user: req.user.name,
@@ -178,13 +186,14 @@ ctrl.contacto = async (req, res) =>{
 }
 
 ctrl.removeCourse = async (req, res) =>{
-        const image = await Cursos.findOne({image: {$regex: req.params.id}});
+        const image = await Cursos.findOne({public_img_id: {$regex: req.params.id}});
         
         if (image) {
             
-            await Inscripciones.find({id_course: image.uniqueId}).remove();
-            await fs.unlink(path.resolve('./src/public/uploads/' + image.image));
-            await image.remove();
+            await Inscripciones.find({id_course: image.public_img_id}).remove();
+            
+            const delete_image = await image.remove();
+            cloudinary.v2.uploader.destroy(delete_image.public_img_id)
             
             req.flash('Success', 'Curso eliminado sastifactoriamente.')
             res.redirect('/dashboard/courses');

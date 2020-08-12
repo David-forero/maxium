@@ -155,10 +155,10 @@
     
         <% for(let i=0; i < courses.length; i++){ %>
             <div style="width: 350px;" class="card m-2 wow fadeInUp" data-wow-delay="0.2s">
-                <a href="/payment/<%= courses[i].uniqueId %>"><img src="/uploads/<%= courses[i].image %>" height="261" class="card-img-top" alt="<%= courses[i].title %>"></a>
+                <a href="/payment/<%= courses[i].public_img_id %>"><img src="<%= courses[i].imageURL %>" height="261" class="card-img-top" alt="<%= courses[i].title %>"></a>
                 
                 <div class="card-body separar">
-                    <a href="/payment/<%= courses[i].uniqueId %>"><h3 class="card-title text-primary"><%= courses[i].title %></h3></a>
+                    <a href="/payment/<%= courses[i].public_img_id %>"><h3 class="card-title text-primary"><%= courses[i].title %></h3></a>
     
                     <div class="datos-card">
                         <p><i class="fa fa-user"></i> Participantes: <%= courses[i].participants_count %></p>
@@ -169,10 +169,3 @@
         <% } %>
     
 </div>
-
-<!-- <script>
-
-// let f = new Date();
-// console.log(f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
-
-</script> -->

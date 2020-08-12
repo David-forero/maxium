@@ -5,7 +5,7 @@
                 <div class="col-md-7 col-sm-12 " >
                     <article class="d-flex justify-content-center">
                         <div class="card my-5" style="width: 550px;">
-                            <img src="/uploads/<%= course.image %>" alt="<%= course.title %>" class="card-img-top img-fluid p-2">
+                            <img src="<%= course.imageURL %>" alt="<%= course.title %>" class="card-img-top img-fluid p-2">
                             <div class="card-body">
                                 <p class="card-text"><small class="text-muted"><i class="fa fa-clock-o"></i> Publicado el <%= moment(course.created_at).locale('es').format("ll") %></small></p>
                                 <h3 class="card-title text-primary"><%= course.title %>.</h3>
@@ -27,9 +27,9 @@
 
                                 <% if(user.role === "admin" || user.role === "mod"){%>
                                     <div class="d-flex justify-content-between">
-                                        <a href="/dashboard/course/edit/<%= course.uniqueId %>" class="btn btn-success mt-3">Modificar</a>
+                                        <a href="/dashboard/course/edit/<%= course.public_img_id %>" class="btn btn-success mt-3">Modificar</a>
 
-                                        <a href="/course/delete/<%= course.uniqueId %>" class="btn btn-danger mt-3">Eliminar Curso</a>
+                                        <a href="/course/delete/<%= course.public_img_id %>" class="btn btn-danger mt-3">Eliminar Curso</a>
                                     </div>
                                 <% } %>
                             </div>
@@ -38,7 +38,7 @@
                 </div>
         
                 <div class="col-md-5 col-sm-12 bg-light">
-                    <form action="/payment/<%= course.uniqueId %>" method="POST" class="">
+                    <form action="/payment/<%= course.public_img_id %>" method="POST" class="">
                         
                         <% if(inscrito){ %>
                             <% if(user.ci == inscrito.ci_user){ %>

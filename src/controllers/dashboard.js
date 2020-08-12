@@ -1,6 +1,13 @@
 const { User, Cursos } = require('../models/index');
 const path = require('path');
 const fs = require('fs-extra');
+const cloudinary = require('cloudinary');
+
+cloudinary.config({//loguearme para consumir la api
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 // Helpers
 const Counts = require('../helpers/counts')
@@ -30,17 +37,19 @@ ctrl.addCourse = async (req, res) =>{
 
     const saveImage = async () =>{
         const imgUrl = randomNumber();
-        const images = await Cursos.find({image: imgUrl});
+        const images = await Cursos.find({public_img_id: imgUrl});
         if (images.length > 0) {
             saveImage();
         } else {
             const ext = path.extname(req.file.originalname).toLowerCase();
             const imageTempPath = req.file.path;
-            const targetPath = path.resolve(`src/public/uploads/${imgUrl}${ext}`);
+            
             
             if (ext === '.png' || ext === '.jpg' || ext === '.jpeg') {
-                await fs.rename(imageTempPath, targetPath);
-                const newCoruse = new Cursos({
+                console.log(imageTempPath);
+                const result = await cloudinary.v2.uploader.upload(imageTempPath);
+                console.log(result);
+                const newCourse = new Cursos({
                     title: req.body.title,
                     consultant: req.body.consultant,
                     modo: req.body.modo,
@@ -50,11 +59,13 @@ ctrl.addCourse = async (req, res) =>{
                     timeFrom: req.body.timeFrom,
                     timeUntil: req.body.timeUntil,
                     price: req.body.price,
-                    image: imgUrl + ext,
+                    imageURL: result.url,
+                    public_img_id: result.public_id,
                     participants_count: req.body.participants_count
                 });
 
-                await newCoruse.save();
+                await newCourse.save();
+                await fs.unlink(imageTempPath) //elimino la img que tengo en local
                 req.flash('Success', 'Se agregó un curso nuevo');
                 res.redirect('/dashboard/courses');
             } else {
@@ -69,7 +80,7 @@ ctrl.addCourse = async (req, res) =>{
 
 ctrl.getCourseForUpdate = async (req, res) =>{
     let title = "Modificar curso";
-    const edit = await Cursos.findOne({image: {$regex: req.params.id}});
+    const edit = await Cursos.findOne({public_img_id: {$regex: req.params.id}});
     res.render('dashboard/edits/edit_course', {edit, title});
 }
 

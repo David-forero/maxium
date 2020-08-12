@@ -128,7 +128,7 @@
                 <div class="d-flex justify-content-center flex-wrap">
                     <% for(let i=0; i < courses.length; i++){ %>
                         <div class="card mb-3 wow flipInY">
-                            <img src="/uploads/<%= courses[i].image %>" alt="<%= courses[i].title %>" class="card-img-top">
+                            <img src="<%= courses[i].imageURL %>" alt="<%= courses[i].title %>" class="card-img-top">
     
                             <div class="card-body separar">
                                 <h5 class="card-title text-dark"><%= courses[i].title %>.</h5>
@@ -141,7 +141,7 @@
                             </div>
     
                             <div class="card-footer">
-                                <a href="/payment/<%= courses[i].uniqueId%>" class="btn btn-block btn-success">
+                                <a href="/payment/<%= courses[i].public_img_id%>" class="btn btn-block btn-success">
                                     Leer más.
                                 </a>
                             </div>
