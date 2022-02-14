@@ -13,7 +13,7 @@ cloudinary.config({//loguearme para consumir la api
 
 const ctrl = {}
 const { Cursos, Inscripciones } = require('../models');
-const i = instapago(process.env.INSTA_PUBLIC_KEY, process.env.INSTA_PRIVATE_KEY);
+// const i = instapago(process.env.INSTA_PUBLIC_KEY, process.env.INSTA_PRIVATE_KEY);
 
 //Helpers
 const MenuCourse = require('../helpers/menu_course');
@@ -91,29 +91,29 @@ ctrl.paymentInsta = async (req, res)=>{
         req.flash('Error', 'Verifique bien el campo cvv.');
         res.redirect(`/payment/${id}`);
     } else {
-        i.pay({
-            amount: course.price,
-            description: course.title,
-            cardholder: cardName,
-            cardholderid: req.user.ci,
-            cardnumber: cardNumber,
-            cvc: cvv,
-            expirationdate: `${month}/${year}`,
-            statusid: 2,
-            address: req.user.address,
-            zipcode: req.user.zip,
-            ip: ip.address()
-            }).then(respuesta => {  
+        // i.pay({
+        //     amount: course.price,
+        //     description: course.title,
+        //     cardholder: cardName,
+        //     cardholderid: req.user.ci,
+        //     cardnumber: cardNumber,
+        //     cvc: cvv,
+        //     expirationdate: `${month}/${year}`,
+        //     statusid: 2,
+        //     address: req.user.address,
+        //     zipcode: req.user.zip,
+        //     ip: ip.address()
+        //     }).then(respuesta => {  
 
-            const voucher = respuesta.data;         
-            res.render('compra_exi', {courses, menuCourse, title, voucher})
-            inscripcion(respuesta.data.id); 
+        //     const voucher = respuesta.data;         
+        //     res.render('compra_exi', {courses, menuCourse, title, voucher})
+        //     inscripcion(respuesta.data.id); 
 
-        }).catch(error => {
-            req.flash('Data', data); 
-            req.flash('Error', error);
-            res.redirect(`/payment/${id}`);
-        });
+        // }).catch(error => {
+        //     req.flash('Data', data); 
+        //     req.flash('Error', error);
+        //     res.redirect(`/payment/${id}`);
+        // });
     }
 }
 
